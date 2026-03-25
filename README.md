@@ -1,20 +1,23 @@
 # Sistemas-de-matriculas-
 
-# Histórias de Usuário - Sistema de Matrículas
+# Histórias de Usuário - Sistema de Aluguel de Carros
 
-## Épico 1: Acesso e Segurança
-* **US01 - Autenticação:** Como um usuário do sistema, eu quero utilizar uma senha para validação do meu login, para que eu possa acessar a plataforma com segurança.
+## Épico 1: Acesso e Cadastro
+* **US01 - Cadastro Prévio:** Como um usuário, eu quero me cadastrar previamente no sistema, para que eu tenha permissão para utilizá-lo.
 
-## Épico 2: Gestão Administrativa (Secretaria)
-* **US02 - Manutenção de Dados:** Como secretaria, eu quero manter as informações sobre as disciplinas, professores e alunos, para garantir que os registros da universidade estejam corretos e atualizados.
-* **US03 - Geração de Currículo:** Como secretaria, eu quero gerar o currículo para cada semestre, para que as disciplinas fiquem estruturadas e disponíveis para oferta.
+## Épico 2: Gestão de Pedidos (Portal do Cliente)
+* **US02 - Introduzir Pedido:** Como cliente, eu quero introduzir um pedido de aluguel através da Internet, para iniciar o processo de locação de um automóvel.
+* **US03 - Consultar Pedido:** Como cliente, eu quero consultar meus pedidos de aluguel, para acompanhar o status da minha solicitação.
+* **US04 - Modificar Pedido:** Como cliente, eu quero modificar um pedido de aluguel, para corrigir ou atualizar informações antes da aprovação.
+* **US05 - Cancelar Pedido:** Como cliente, eu quero cancelar um pedido de aluguel, caso eu não precise mais do veículo.
 
-## Épico 3: Portal do Aluno e Regras de Negócio
-* **US04 - Efetuar Matrícula:** Como aluno, eu quero acessar o sistema durante o período de matrículas para me inscrever em 4 disciplinas de 1ª opção (obrigatórias) e em 2 alternativas (optativas).
-* **US05 - Cancelar Matrícula:** Como aluno, eu quero acessar o sistema durante o período de matrículas para cancelar matrículas feitas anteriormente, permitindo o ajuste da minha grade curricular.
-* **US06 - Capacidade Máxima:** Como sistema, eu quero encerrar as inscrições para uma disciplina quando ela atingir o limite de 60 alunos inscritos, para não exceder a capacidade permitida.
-* **US07 - Viabilidade da Disciplina:** Como sistema, eu quero cancelar uma disciplina caso ela tenha menos de 3 alunos inscritos no final do período de matrículas, garantindo que apenas turmas viáveis fiquem ativas no semestre.
+## Épico 3: Avaliação e Contratos (Portal do Agente)
+* **US06 - Avaliação Financeira:** Como agente (empresa ou banco), eu quero analisar os pedidos do ponto de vista financeiro, para avaliar a viabilidade do aluguel.
+* **US07 - Modificação por Agente:** Como agente, eu quero poder modificar os pedidos de aluguel, para ajustar termos ou condições durante o processo de avaliação.
+* **US08 - Encaminhamento de Contrato:** Como agente, eu quero colocar os pedidos com parecer positivo à consideração, para que o contrato possa ser executado.
+* **US09 - Contrato de Crédito:** Como banco agente, eu quero associar um contrato de crédito a um aluguel de automóvel, para financiar a operação.
 
-## Épico 4: Integrações e Portal do Professor
-* **US08 - Integração Financeira:** Como sistema de matrículas, eu quero notificar o sistema de cobranças logo após a inscrição do aluno no semestre, de modo que o aluno possa ser cobrado corretamente pelas disciplinas.
-* **US09 - Consulta de Turmas:** Como professor, eu quero acessar o sistema para consultar quais são os alunos que estão matriculados em cada disciplina que ministro.
+## Épico 4: Base de Dados e Cadastros
+* **US10 - Dados do Contratante:** Como sistema, eu preciso armazenar os dados de identificação do contratante (RG, CPF, Nome, Endereço), profissão, entidades empregadoras e até 3 rendimentos, para compor o contrato legalmente.
+* **US11 - Dados do Automóvel:** Como sistema, eu preciso registrar as informações do automóvel (matrícula, ano, marca, modelo e placa), para manter o controle dos veículos.
+* **US12 - Propriedade do Veículo:** Como sistema, eu preciso registrar os automóveis como propriedade de clientes, empresas ou bancos, dependendo do tipo de contrato.
