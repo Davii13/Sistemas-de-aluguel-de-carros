@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: br.gestao
+testFramework: junit
+sourceLanguage: java
+buildTool: maven
+features: [app-name, data, data-jdbc, hibernate-jpa, http-client-test, http-server-jdk, java, java-application, jdbc-hikari, junit, logback, maven, maven-enforcer-plugin, micronaut-aot, micronaut-http-validation, micronaut-processing-compiler-args, mysql, properties, readme, serialization-jackson, shade, static-resources, test-resources]
