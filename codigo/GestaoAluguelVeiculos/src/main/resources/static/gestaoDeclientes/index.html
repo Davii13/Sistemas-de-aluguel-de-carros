@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Aluguel de Carros - Clientes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <h1>🚗 Gestão de Clientes</h1>
+
+  <form id="formCliente">
+    <input type="hidden" id="id">
+
+    <input type="text" id="nome" placeholder="Nome" required>
+    <input type="text" id="cpf" placeholder="CPF" required>
+    <input type="text" id="rg" placeholder="RG">
+    <input type="text" id="endereco" placeholder="Endereço">
+    <input type="text" id="profissao" placeholder="Profissão">
+
+    <button type="submit">Salvar</button>
+  </form>
+
+  <h2>Lista de Clientes</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>CPF</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody id="listaClientes"></tbody>
+  </table>
+</div>
+
+<script src="js.js"></script>
+</body>
+</html>

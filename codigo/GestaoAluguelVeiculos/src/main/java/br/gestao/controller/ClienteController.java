@@ -10,6 +10,7 @@ import br.gestao.model.Cliente;
 import jakarta.inject.Inject;
 
 import java.util.List;
+
 @Controller("/clientes")
 public class ClienteController {
 
