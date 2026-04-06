@@ -40,7 +40,15 @@
       <artifactId>micronaut-data-jdbc</artifactId>
       <scope>compile</scope>
     </dependency>
+<dependency>
+    <groupId>io.micronaut.data</groupId>
+    <artifactId>micronaut-data-hibernate-jpa</artifactId>
+</dependency>
 
+<dependency>
+    <groupId>io.micronaut.sql</groupId>
+    <artifactId>micronaut-jdbc-hikari</artifactId>
+</dependency>
     <dependency>
       <groupId>io.micronaut.data</groupId>
       <artifactId>micronaut-data-tx-hibernate</artifactId>
