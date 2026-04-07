@@ -18,7 +18,7 @@
     <jdk.version>21</jdk.version>
     <release.version>21</release.version>
     <micronaut.version>4.10.11</micronaut.version>
-    <micronaut.runtime>http_server_jdk</micronaut.runtime>
+    <micronaut.runtime>netty</micronaut.runtime>
     <micronaut.aot.enabled>false</micronaut.aot.enabled>
     <micronaut.test.resources.enabled>true</micronaut.test.resources.enabled>
     <exec.mainClass>br.gestao.Application</exec.mainClass>
@@ -46,13 +46,18 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>io.micronaut.servlet</groupId>
-      <artifactId>micronaut-http-server-jdk</artifactId>
+      <groupId>io.micronaut</groupId>
+      <artifactId>micronaut-http-server-netty</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>com.mysql</groupId>
-      <artifactId>mysql-connector-j</artifactId>
+      <groupId>io.micronaut.reactor</groupId>
+      <artifactId>micronaut-reactor</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
       <scope>runtime</scope>
     </dependency>
     <dependency>
