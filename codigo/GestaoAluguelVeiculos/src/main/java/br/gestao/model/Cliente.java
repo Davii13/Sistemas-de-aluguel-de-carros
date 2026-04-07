@@ -1,18 +1,17 @@
 package br.gestao.model;
 
-import io.micronaut.serde.annotation.Serdeable; // Adicione este import
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import io.micronaut.serde.annotation.Serdeable;
+import jakarta.persistence.*;
+import java.util.List;
+import java.util.ArrayList;
 
-@Serdeable // Adicione esta anotação aqui
+@Serdeable
 @Entity
+@Table(name = "cliente")
 public class Cliente {
 
     @Id
-    // Lembre-se de usar IDENTITY para o MySQL
-    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nome;
@@ -21,7 +20,11 @@ public class Cliente {
     private String endereco;
     private String profissao;
 
-    // Getters e Setters permanecem iguais...
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Rendimento> rendimentos = new ArrayList<>();
+
+    public Cliente() {}
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getNome() { return nome; }
@@ -34,4 +37,7 @@ public class Cliente {
     public void setEndereco(String endereco) { this.endereco = endereco; }
     public String getProfissao() { return profissao; }
     public void setProfissao(String profissao) { this.profissao = profissao; }
+    
+    public List<Rendimento> getRendimentos() { return rendimentos; }
+    public void setRendimentos(List<Rendimento> rendimentos) { this.rendimentos = rendimentos; }
 }

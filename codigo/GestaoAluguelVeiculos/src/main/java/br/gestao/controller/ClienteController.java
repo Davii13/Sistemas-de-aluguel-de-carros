@@ -1,14 +1,10 @@
 package br.gestao.controller;
-import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Get;
-import io.micronaut.http.annotation.Post;
-import io.micronaut.http.annotation.Put;
-import io.micronaut.http.annotation.Delete;
-import io.micronaut.http.annotation.Body;
+
+import io.micronaut.http.annotation.*;
 import br.gestao.service.ClienteService;
 import br.gestao.model.Cliente;
+import br.gestao.model.Rendimento;
 import jakarta.inject.Inject;
-
 import java.util.List;
 
 @Controller("/clientes")
@@ -16,6 +12,11 @@ public class ClienteController {
 
     @Inject
     private ClienteService service;
+
+    @Post("/{id}/rendimentos")
+    public Cliente adicionarRendimento(Long id, @Body Rendimento rendimento) {
+        return service.adicionarRendimento(id, rendimento);
+    }
 
     @Post
     public Cliente criar(@Body Cliente cliente) {
