@@ -1,4 +1,4 @@
-const API = "/clientes";
+const API = "http://localhost:8081/clientes";
 const form = document.getElementById("formCliente");
 const lista = document.getElementById("listaClientes");
 const containerRendimentos = document.getElementById("containerRendimentos");
