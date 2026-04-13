@@ -27,22 +27,22 @@ export default function Login() {
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.usuario));
       
-      navigate('/home');
+      navigate('/app');
     } catch (err) {
       setError(err.message);
     }
   };
 
   return (
-    <div className="auth-container">
+    <div className="auth-container fade-in">
       <div className="glass-panel auth-box">
         <div style={{display: 'flex', justifyContent: 'center', marginBottom: '1rem'}}>
-           <Car size={48} color="var(--primary)" />
+           <Car size={56} className="text-gold" />
         </div>
-        <h1 className="auth-title font-racing">LOCALIZA X</h1>
-        <p className="auth-subtitle">Gestão de Aluguel de Luxo</p>
+        <h1 className="auth-title font-outfit text-gold" style={{textAlign: 'center', fontSize: '2rem', marginBottom: '0.5rem', fontWeight: '800'}}>LOCALIZA PREMIUM</h1>
+        <p className="auth-subtitle" style={{textAlign: 'center', color: 'var(--text-muted)', marginBottom: '2rem'}}>Gestão de Aluguel de Luxo</p>
 
-        {error && <div style={{color: '#ff4a5a', marginBottom: '1rem', textAlign: 'center'}}>{error}</div>}
+        {error && <div style={{color: 'var(--danger)', marginBottom: '1rem', textAlign: 'center'}}>{error}</div>}
 
         <form onSubmit={handleLogin}>
           <div className="input-group">
@@ -82,8 +82,8 @@ export default function Login() {
           </button>
         </form>
 
-        <p style={{textAlign: 'center', marginTop: '2rem', color: 'var(--text-muted)'}}>
-          Ainda não tem conta? <Link to="/register" style={{color: 'var(--primary)', textDecoration: 'none', fontWeight: 'bold'}}>Registre-se</Link>
+        <p style={{textAlign: 'center', marginTop: '2.5rem', color: 'var(--text-muted)'}}>
+          Ainda não tem conta? <Link to="/register" style={{color: 'var(--primary-gold)', textDecoration: 'none', fontWeight: 'bold'}}>Registre-se</Link>
         </p>
       </div>
     </div>

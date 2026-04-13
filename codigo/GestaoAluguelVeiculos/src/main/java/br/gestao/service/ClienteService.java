@@ -42,6 +42,10 @@ public class ClienteService {
         return repository.findById(id).orElse(null);
     }
 
+    public Cliente buscarPorUsuarioId(Long usuarioId) {
+        return repository.findByUsuarioId(usuarioId).orElse(null);
+    }
+
     public Cliente atualizar(Long id, Cliente cliente) {
         cliente.setId(id);
         if (cliente.getRendimentos() != null) {

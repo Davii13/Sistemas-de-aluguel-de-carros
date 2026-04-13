@@ -23,6 +23,10 @@ public class Cliente {
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Rendimento> rendimentos = new ArrayList<>();
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
+    private Usuario usuario;
+
     public Cliente() {}
 
     public Long getId() { return id; }
@@ -40,4 +44,7 @@ public class Cliente {
     
     public List<Rendimento> getRendimentos() { return rendimentos; }
     public void setRendimentos(List<Rendimento> rendimentos) { this.rendimentos = rendimentos; }
+    
+    public Usuario getUsuario() { return usuario; }
+    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
 }

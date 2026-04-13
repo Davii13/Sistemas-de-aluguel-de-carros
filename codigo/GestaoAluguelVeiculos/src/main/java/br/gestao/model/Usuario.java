@@ -2,6 +2,7 @@ package br.gestao.model;
 
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
+import br.gestao.enums.Role;
 
 @Serdeable
 @Entity
@@ -20,6 +21,10 @@ public class Usuario {
     @Column(nullable = false)
     private String senha;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role tipoPerfil = Role.CLIENTE;
+
     public Usuario() {}
 
     public Long getId() { return id; }
@@ -33,4 +38,7 @@ public class Usuario {
     
     public String getSenha() { return senha; }
     public void setSenha(String senha) { this.senha = senha; }
+    
+    public Role getTipoPerfil() { return tipoPerfil; }
+    public void setTipoPerfil(Role tipoPerfil) { this.tipoPerfil = tipoPerfil; }
 }

@@ -33,6 +33,11 @@ public class ClienteController {
         return service.buscarPorId(id);
     }
 
+    @Get("/usuario/{usuarioId}")
+    public Cliente buscarPorUsuario(Long usuarioId) {
+        return service.buscarPorUsuarioId(usuarioId);
+    }
+
     @Put("/{id}")
     public Cliente atualizar(Long id, @Body Cliente cliente) {
         return service.atualizar(id, cliente);
