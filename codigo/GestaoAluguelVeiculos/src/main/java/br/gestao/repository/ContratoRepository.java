@@ -6,4 +6,5 @@ import io.micronaut.data.repository.CrudRepository;
 
 @Repository
 public interface ContratoRepository extends CrudRepository<Contrato, Long> {
+    void deleteByPedidoId(Long pedidoId);
 }

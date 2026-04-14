@@ -1,17 +1,25 @@
 package br.gestao.service;
 
 import br.gestao.model.Automovel;
+import br.gestao.model.Pedido;
 import br.gestao.repository.AutomovelRepository;
+import br.gestao.repository.ContratoRepository;
+import br.gestao.repository.PedidoRepository;
 import jakarta.inject.Singleton;
+import jakarta.transaction.Transactional;
 import java.util.List;
 
 @Singleton
 public class AutomovelService {
 
     private final AutomovelRepository automovelRepository;
+    private final PedidoRepository pedidoRepository;
+    private final ContratoRepository contratoRepository;
 
-    public AutomovelService(AutomovelRepository automovelRepository) {
+    public AutomovelService(AutomovelRepository automovelRepository, PedidoRepository pedidoRepository, ContratoRepository contratoRepository) {
         this.automovelRepository = automovelRepository;
+        this.pedidoRepository = pedidoRepository;
+        this.contratoRepository = contratoRepository;
     }
 
     public List<Automovel> listarTodos() {
@@ -33,7 +41,13 @@ public class AutomovelService {
         return automovelRepository.update(automovel);
     }
 
+    @Transactional
     public void excluir(Long id) {
+        List<Pedido> pedidos = pedidoRepository.findByAutomovelId(id);
+        for (Pedido p : pedidos) {
+            contratoRepository.deleteByPedidoId(p.getId());
+            pedidoRepository.deleteById(p.getId());
+        }
         automovelRepository.deleteById(id);
     }
 }

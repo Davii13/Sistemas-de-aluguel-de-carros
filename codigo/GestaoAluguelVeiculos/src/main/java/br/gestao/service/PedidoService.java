@@ -95,10 +95,12 @@ public class PedidoService {
         pedido.setDataInicio(LocalDate.parse(request.getDataInicio()));
         pedido.setDataFim(LocalDate.parse(request.getDataFim()));
         
-        return pedidoRepository.save(pedido);
+        return pedidoRepository.update(pedido);
     }
     
+    @Transactional
     public void cancelarPedido(Long id) {
+        contratoRepository.deleteByPedidoId(id);
         pedidoRepository.deleteById(id);
     }
 }

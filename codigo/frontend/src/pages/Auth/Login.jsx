@@ -35,12 +35,12 @@ export default function Login() {
 
   return (
     <div className="auth-container fade-in">
-      <div className="glass-panel auth-box">
-        <div style={{display: 'flex', justifyContent: 'center', marginBottom: '1rem'}}>
-           <Car size={56} className="text-gold" />
+      <div className="auth-box">
+        <div style={{display: 'flex', justifyContent: 'center', marginBottom: '1.5rem', filter: 'drop-shadow(0 0 15px rgba(212, 175, 55, 0.4))'}}>
+           <Car size={64} className="text-gold" />
         </div>
-        <h1 className="auth-title font-outfit text-gold" style={{textAlign: 'center', fontSize: '2rem', marginBottom: '0.5rem', fontWeight: '800'}}>LOCALIZA PREMIUM</h1>
-        <p className="auth-subtitle" style={{textAlign: 'center', color: 'var(--text-muted)', marginBottom: '2rem'}}>Gestão de Aluguel de Luxo</p>
+        <h1 className="auth-title font-outfit text-gold" style={{textAlign: 'center', fontSize: '2.2rem', marginBottom: '0.5rem', fontWeight: '800', letterSpacing: '1px', textShadow: '0 4px 15px rgba(0,0,0,0.5)'}}>LOCALIZA PREMIUM</h1>
+        <p className="auth-subtitle" style={{textAlign: 'center', color: 'var(--text-main)', marginBottom: '2.5rem', fontWeight: '500'}}>Gestão de Aluguel de Luxo</p>
 
         {error && <div style={{color: 'var(--danger)', marginBottom: '1rem', textAlign: 'center'}}>{error}</div>}
 

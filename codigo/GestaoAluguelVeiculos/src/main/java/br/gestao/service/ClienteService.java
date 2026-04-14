@@ -46,12 +46,24 @@ public class ClienteService {
         return repository.findByUsuarioId(usuarioId).orElse(null);
     }
 
-    public Cliente atualizar(Long id, Cliente cliente) {
-        cliente.setId(id);
-        if (cliente.getRendimentos() != null) {
-            cliente.getRendimentos().forEach(r -> r.setCliente(cliente));
+    public Cliente atualizar(Long id, Cliente payload) {
+        Cliente existente = repository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado"));
+            
+        existente.setNome(payload.getNome());
+        existente.setCpf(payload.getCpf());
+        existente.setRg(payload.getRg());
+        existente.setEndereco(payload.getEndereco());
+        existente.setProfissao(payload.getProfissao());
+        
+        existente.getRendimentos().clear();
+        if (payload.getRendimentos() != null) {
+            for (Rendimento r : payload.getRendimentos()) {
+                r.setCliente(existente);
+                existente.getRendimentos().add(r);
+            }
         }
-        return repository.update(cliente);
+        return repository.update(existente);
     }
 
     public void deletar(Long id) {
