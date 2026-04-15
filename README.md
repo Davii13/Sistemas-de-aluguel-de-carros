@@ -3,228 +3,435 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Java-21-orange.svg" alt="Java 21" />
   <img src="https://img.shields.io/badge/Micronaut-4.10.11-black.svg" alt="Micronaut" />
-  <img src="https://img.shields.io/badge/React-19-blue.svg" alt="React 19" />
-  <img src="https://img.shields.io/badge/Database-PostgreSQL-blue.svg" alt="PostgreSQL" />
+  <img src="https://img.shields.io/badge/React-19-61DAFB.svg" alt="React 19" />
+  <img src="https://img.shields.io/badge/Vite-latest-646CFF.svg" alt="Vite" />
+  <img src="https://img.shields.io/badge/Database-PostgreSQL-336791.svg" alt="PostgreSQL" />
+  <img src="https://img.shields.io/badge/Build-Maven-C71A36.svg" alt="Maven" />
 </p>
 
-Este projeto é um sistema web corporativo **Fullstack** desenhado para gerenciar o ciclo de vida completo da locação de automóveis. A plataforma resolve as deficiências de processos manuais ofertando portais isolados para **Clientes** (solicitação de crédito e aluguel) e **Agentes/Bancos** (avaliação de crédito e aprovação de frotas).
+<p align="center">
+  Sistema web corporativo <strong>Fullstack</strong> para gerenciar o ciclo de vida completo da locação de automóveis, com portais isolados para <strong>Clientes</strong> e <strong>Agentes/Bancos</strong>.
+</p>
+
+---
+
+## 📋 Índice
+
+- [Sobre o Projeto](#-sobre-o-projeto)
+- [Principais Funcionalidades](#-principais-funcionalidades)
+- [Arquitetura do Sistema](#-arquitetura-do-sistema)
+- [Tecnologias Utilizadas](#-tecnologias-utilizadas)
+- [Banco de Dados — Diagrama E-R](#-estrutura-do-banco-de-dados-diagrama-e-r)
+- [API REST — Endpoints](#-api-rest-endpoints-principais)
+- [Estrutura de Pastas](#-arquitetura-completa-de-pastas-e-arquivos)
+- [Como Rodar](#-passo-a-passo-para-execução-local)
+- [Histórias de Usuário](#-histórias-de-usuário)
+- [Autores](#-autores)
+
+---
+
+## 💡 Sobre o Projeto
+
+Este projeto resolve as deficiências de processos manuais de locação vehicular, oferecendo:
+
+- **Portal do Cliente**: solicitação de crédito, visualização de catálogo, gerenciamento de pedidos e perfil financeiro.
+- **Portal do Agente/Banco**: avaliação financeira, aprovação de contratos, gestão de frota e auditoria completa.
+
+O backend expõe uma **API REST** construída com Micronaut, consumida pelo frontend React. O banco de dados relacional **PostgreSQL** é gerenciado via Hibernate JPA.
 
 ---
 
 ## 🎯 Principais Funcionalidades
 
-- **Autenticação e Autorização**: Sistema unificado com perfis de acesso restritos (Cliente vs Administração/Agente).
-- **Gestão de Perfil Pessoal**: Clientes incluem rendimentos financeiros e documentação para aprovação de risco.
-- **Painel de Aprovação (Agentes)**: Fluxo de aprovação ou recusa baseada na análise financeira.
-- **Vitrine Automotiva**: Interface moderna para filtragem e visualização de frotas disponíveis em tempo real.
-- **Contratos e Auditoria**: Geração automática de contratos associados legalmente ao requisitante e aprovação da entidade fiadora (banco ou seguradora).
+| Funcionalidade | Descrição |
+|---|---|
+| 🔐 **Autenticação** | Sistema unificado com perfis distintos (Cliente / Agente / Admin) |
+| 👤 **Gestão de Perfil** | Clientes cadastram rendimentos, endereços e documentos para análise de risco |
+| 🚙 **Vitrine Automotiva** | Interface de catálogo para visualizar e filtrar frota disponível |
+| 📋 **Pedidos de Aluguel** | Criação, consulta, modificação e cancelamento de pedidos |
+| ✅ **Painel de Aprovação** | Agentes analisam, modificam e aprovam ou recusam pedidos financeiros |
+| 📑 **Geração de Contratos** | Contratos legais gerados automaticamente com vinculação de fiador (banco/seguradora) |
+| 🏛️ **Gestão de Frota** | Cadastro, edição e remoção de veículos da frota com proprietário associado |
 
 ---
-## 👥 Autores
 
-<<<<<<< HEAD
 ## 📐 Arquitetura do Sistema
 
-Abaixo, a representação da arquitetura distribuída entre o Frontend de componente único (React) e a API Monolítica Modular (Micronaut).
+A arquitetura separa claramente o Frontend (SPA React) da API Monolítica Modular (Micronaut), comunicando-se via HTTP/REST.
 
 ```mermaid
 graph TD
-    Client[Navegador UI - React/Vite]
-    API[Micronaut Backend API]
-    DB[(PostgreSQL Database)]
+    Browser["🌐 Navegador (React + Vite)"]
+    API["⚙️ Micronaut Backend API :8080"]
+    DB[("🗄️ PostgreSQL Database")]
 
-    Client <-->|Requisições HTTP/REST| API
-    API <-->|Micronaut Data / Hibernate| DB
+    Browser <-->|"HTTP/REST (JSON)"| API
+    API <-->|"Micronaut Data / Hibernate JPA"| DB
 
-    subgraph Backend Layers
-        Controller[Controllers & Security]
-        Service[Business Logic Services]
-        Repo[JPA Repositories]
+    subgraph "Camadas do Backend"
+        Controller["🎮 Controllers (HTTP Layer)"]
+        Service["🧠 Services (Regras de Negócio)"]
+        Repository["📦 Repositories (Data Access)"]
         Controller --> Service
-        Service --> Repo
+        Service --> Repository
     end
-    API --- Backend Layers
+    API --- Controller
 ```
 
 ---
 
-## 🛠️ Tecnologias e Dependências Profundas
+## 🛠️ Tecnologias Utilizadas
 
-- **Backend Layers**:
-  - `Java 21` (Records, Switch Expressions, Virtual Threads ready).
-  - `Micronaut HTTP Server Netty` (Alta performance assíncrona).
-  - `Micronaut Data Hibernate JPA` (OR-Mapping com o padrão Data Repositories).
-  - `Micronaut Serde Jackson` (Serialização e desserialização ultra rápida nativa otimizada).
+### Backend (`codigo/GestaoAluguelVeiculos`)
 
-- **Frontend Toolkit**:
-  - `React 19` + `Vite` (Build tool super veloz, HMR instantâneo).
-  - `React Router DOM` v7 (Navegação contextual global).
-  - `Tailwind CSS` (Atomic UI robusta e responsiva).
+| Tecnologia | Versão | Função |
+|---|---|---|
+| **Java** | 21 | Linguagem principal (Records, Switch Expressions) |
+| **Micronaut Framework** | 4.10.11 | Framework web de alta performance para JVM |
+| **Micronaut HTTP Server Netty** | - | Servidor HTTP assíncrono e não-bloqueante |
+| **Micronaut Data Hibernate JPA** | - | ORM para mapeamento objeto-relacional |
+| **Micronaut Serde Jackson** | - | Serialização/Desserialização JSON otimizada |
+| **PostgreSQL** | - | Banco de dados relacional de produção |
+| **HikariCP** | - | Pool de conexões de alto desempenho |
+| **Maven** | - | Gerenciador de dependências e build |
+
+### Frontend (`codigo/frontend`)
+
+| Tecnologia | Versão | Função |
+|---|---|---|
+| **React** | 19 | Biblioteca para criação de interfaces (SPA) |
+| **Vite** | latest | Bundler e server de desenvolvimento ultrarrápido |
+| **React Router DOM** | v7 | Roteamento dinâmico sem recarregar a página |
+| **Tailwind CSS** | - | Framework CSS utilitário e responsivo |
+| **Lucide React** | - | Biblioteca de ícones modernos e leves |
 
 ---
 
-## 📊 Estrutura do Banco de Dados (Diagrama E-R Básico)
+## 📊 Estrutura do Banco de Dados (Diagrama E-R)
 
-O fluxo core do negócio se divide nestas entidades vitais no banco relacional `PostgreSQL`:
+O modelo de negócio é representado pelas seguintes entidades no PostgreSQL:
 
 ```mermaid
 erDiagram
-    USUARIO ||--o| CLIENTE : "extends"
-    USUARIO ||--o| AGENTE : "extends"
-    
-    CLIENTE ||--o{ RENDIMENTO : "possui (até 3)"
+    USUARIO {
+        Long id PK
+        String nome
+        String email
+        String senha
+        Role role
+    }
+    CLIENTE {
+        Long id PK
+        String cpf
+        String rg
+        String endereco
+        String profissao
+    }
+    AGENTE {
+        Long id PK
+        TipoAgente tipo
+    }
+    AUTOMOVEL {
+        Long id PK
+        String matricula
+        String marca
+        String modelo
+        String placa
+        int ano
+        TipoProprietario proprietario
+    }
+    PEDIDO {
+        Long id PK
+        StatusPedido status
+        Date dataSolicitacao
+        Double valorProposto
+    }
+    CONTRATO {
+        Long id PK
+        Date dataAssinatura
+        Double valorFinal
+    }
+    RENDIMENTO {
+        Long id PK
+        String fonteRenda
+        Double valorMensal
+    }
+
+    USUARIO ||--o| CLIENTE : "é um"
+    USUARIO ||--o| AGENTE : "é um"
+    CLIENTE ||--o{ RENDIMENTO : "possui até 3"
     CLIENTE ||--o{ PEDIDO : "solicita"
-    
-    AUTOMOVEL ||--o{ PEDIDO : "é alvo do"
-    
+    AUTOMOVEL ||--o{ PEDIDO : "é alvo de"
     PEDIDO ||--o| CONTRATO : "gera"
-    AGENTE ||--o{ CONTRATO : "avalia/assina"
+    AGENTE ||--o{ CONTRATO : "avalia e assina"
 ```
 
 ---
 
-## 🔄 API REST: Endpoints Principais (Backend)
+## 🔄 API REST: Endpoints Principais
 
-Aqui está o mapa geral dos recursos disponibilizados para que o React interaja via `Axios`/`Fetch`:
+Mapa completo dos recursos disponibilizados pela API Micronaut:
 
-| Rota / Endpoint | Método | Descrição | Requer Auth | Papel Mínimo |
-|-------------------------|--------|----------------------------------------------------|-------------|----------------|
-| `/api/auth/register`    | `POST` | Cadastro inicial (Usuário e Senha)                 | Não         | -              |
-| `/api/auth/login`       | `POST` | Retorna Token ou Autorização de Sessão             | Não         | -              |
-| `/api/clientes/{id}`    | `GET`  | Busca os dados biográficos e rendimentos do cliente| Sim         | Cliente/Admin  |
-| `/api/automoveis`       | `GET`  | Lista a frota e catálogo disponíveis               | Sim         | Autenticado    |
-| `/api/automoveis`       | `POST` | Cadastro de nova placa e dados de documento veicular| Sim        | Agente/Banco   |
-| `/api/pedidos`          | `POST` | Cliente inicia o desejo de alugar automóvel X      | Sim         | Cliente        |
-| `/api/pedidos/{id}`     | `PUT`  | Modificar dados atrelados antes da aprovação       | Sim         | Todos          |
-| `/api/pedidos/agente`   | `GET`  | Retorna a fila para painel de aprovação das agências| Sim        | Agente         |
+| Rota | Método | Descrição | Auth | Papel |
+|------|--------|-----------|------|-------|
+| `/api/auth/register` | `POST` | Cadastro de novo usuário (Cliente ou Agente) | ❌ | — |
+| `/api/auth/login` | `POST` | Login e retorno de sessão/token | ❌ | — |
+| `/api/clientes` | `GET` | Lista todos os clientes cadastrados | ✅ | Admin |
+| `/api/clientes/{id}` | `GET` | Busca dados biográficos e rendimentos do cliente | ✅ | Cliente/Admin |
+| `/api/clientes/{id}` | `PUT` | Atualiza dados pessoais e rendimentos do cliente | ✅ | Cliente/Admin |
+| `/api/automoveis` | `GET` | Lista frota e catálogo disponíveis | ✅ | Autenticado |
+| `/api/automoveis` | `POST` | Cadastra novo veículo na frota | ✅ | Agente/Admin |
+| `/api/automoveis/{id}` | `PUT` | Atualiza dados de um veículo | ✅ | Agente/Admin |
+| `/api/automoveis/{id}` | `DELETE` | Remove veículo da frota | ✅ | Agente/Admin |
+| `/api/pedidos` | `GET` | Lista todos os pedidos do cliente logado | ✅ | Cliente |
+| `/api/pedidos` | `POST` | Cliente cria novo pedido de aluguel | ✅ | Cliente |
+| `/api/pedidos/{id}` | `PUT` | Modifica dados do pedido antes da aprovação | ✅ | Todos |
+| `/api/pedidos/{id}` | `DELETE` | Cancela/remove um pedido | ✅ | Todos |
+| `/api/pedidos/agente` | `GET` | Fila de pedidos para análise dos agentes | ✅ | Agente |
 
-*(Nota: Alguns endpoints dependem do `SimpleCorsFilter` habilitar os métodos PUT, POST, DELETE na camada de controle do Micronaut).*
-
----
-
-## 📂 Arquitetura Completa de Pastas 
-=======
-Liste os principais contribuidores. Você pode usar links para seus perfis.
-
-| 👤 Nome | 🖼️ Foto | :octocat: GitHub | 💼 LinkedIn | 📤 Gmail |
-|---------|----------|-----------------|-------------|-----------|
-| Davi Nunes Carvalho | <div align="center"><img src="https://github.com/Davii13.png" width="70px" height="70px" style="border-radius:50%;"></div> | <div align="center"><a href="https://github.com/Davii13"><img src="https://joaopauloaramuni.github.io/image/github6.png" width="50px" height="50px"></a></div> | <div align="center"><a href="#"><img src="https://joaopauloaramuni.github.io/image/linkedin2.png" width="50px" height="50px"></a></div> | <div align="center"><a href="mailto:seuemail@gmail.com"><img src="https://joaopauloaramuni.github.io/image/gmail3.png" width="50px" height="50px"></a></div> |
-| João Victor Russo Marquito | <div align="center"><img src="https://github.com/joaovictorz10.png" width="70px" height="70px" style="border-radius:50%;"></div> | <div align="center"><a href="https://github.com/joaovictorz10"><img src="https://joaopauloaramuni.github.io/image/github6.png" width="50px" height="50px"></a></div> | <div align="center"><a href="#"><img src="https://joaopauloaramuni.github.io/image/linkedin2.png" width="50px" height="50px"></a></div> | <div align="center"><a href="mailto:seuemail@gmail.com"><img src="https://joaopauloaramuni.github.io/image/gmail3.png" width="50px" height="50px"></a></div> |
+> ⚠️ O filtro `SimpleCorsFilter` libera os métodos `PUT`, `POST`, `DELETE` para o frontend em `localhost:5173`.
 
 ---
-## 📂 Estrutura do Projeto
->>>>>>> 46626b913f04eab47fce830bf8d982a94677ca8d
 
-### 🔙 Backend (Micronaut)
+## 📂 Arquitetura Completa de Pastas e Arquivos
+
+### 🔙 Backend — `codigo/GestaoAluguelVeiculos/`
+
 ```text
-Sistemas-de-aluguel-de-carros/codigo/GestaoAluguelVeiculos/src
-├── main/
-│   ├── java/br/gestao/
-│   │   ├── config/              # Inicialização + Segurança (Ex: SimpleCorsFilter.java)
-│   │   ├── controller/          # Endpoints acima mapeados (*Controller.java)
-│   │   ├── dto/                 # Objects for REST Payload (Requisição e Resposta JSON)
-│   │   ├── enums/               # Domínios de Status (Role, TipoAgente, TipoProprietario)
-│   │   ├── model/               # Modelos mapeados pelo JPA (*.java referenciando DB)
-│   │   ├── repository/          # Interfaces CRUD estendendo Data JPA
-│   │   ├── service/             # Injeções de regras de negócios pesadas
-│   │   └── Application.java     # Script Ponto de Entrada da JVM
+GestaoAluguelVeiculos/
+├── src/
+│   ├── main/
+│   │   ├── java/br/gestao/
+│   │   │   │
+│   │   │   ├── config/                     # Configurações Globais da Aplicação
+│   │   │   │   ├── SimpleCorsFilter.java   # Libera CORS p/ o frontend React
+│   │   │   │   └── StartupListener.java    # Seed inicial (cria Admin padrão no DB)
+│   │   │   │
+│   │   │   ├── controller/                 # Controladores HTTP — Endpoints REST
+│   │   │   │   ├── AuthController.java     # POST /api/auth/register e /login
+│   │   │   │   ├── AutomovelController.java# CRUD /api/automoveis
+│   │   │   │   ├── ClienteController.java  # CRUD /api/clientes (perfil e rendimentos)
+│   │   │   │   ├── FrontendController.java # Fallback de rotas SPA em produção
+│   │   │   │   └── PedidoController.java   # CRUD /api/pedidos (fluxo de aprovação)
+│   │   │   │
+│   │   │   ├── dto/                        # Data Transfer Objects (Payload JSON)
+│   │   │   │   ├── AuthResponse.java       # Resposta de autenticação (token/id/role)
+│   │   │   │   ├── AutomovelDTO.java       # Payload de criação/edição de veículo
+│   │   │   │   ├── ClienteDTO.java         # Dados pessoais e rendimentos do cliente
+│   │   │   │   ├── ContratoDTO.java        # Dados de contrato gerado
+│   │   │   │   ├── CreatePedidoRequest.java# Requisição de novo pedido de aluguel
+│   │   │   │   ├── LoginRequest.java       # Email + Senha para login
+│   │   │   │   ├── PedidoDTO.java          # Representação de pedido para o frontend
+│   │   │   │   ├── RegisterRequest.java    # Dados de cadastro de novo usuário
+│   │   │   │   └── RendimentoDTO.java      # Fonte e valor de cada rendimento
+│   │   │   │
+│   │   │   ├── enums/                      # Domínios de valores fixos (Status/Tipos)
+│   │   │   │   ├── Role.java               # CLIENTE | AGENTE | ADMIN
+│   │   │   │   ├── StatusPedido.java       # PENDENTE | APROVADO | RECUSADO | CANCELADO
+│   │   │   │   ├── TipoAgente.java         # EMPRESA | BANCO | SEGURADORA
+│   │   │   │   └── TipoProprietario.java   # AGENCIA | BANCO | CLIENTE
+│   │   │   │
+│   │   │   ├── model/                      # Entidades JPA — Tabelas do PostgreSQL
+│   │   │   │   ├── Agente.java             # Entidade de Agente/Banco avaliador
+│   │   │   │   ├── Automovel.java          # Veículo da frota (marca, modelo, placa)
+│   │   │   │   ├── Cliente.java            # Perfil completo do cliente contratante
+│   │   │   │   ├── Contrato.java           # Contrato gerado após aprovação do pedido
+│   │   │   │   ├── Pedido.java             # Pedido de aluguel associando Cliente+Carro
+│   │   │   │   ├── Rendimento.java         # Fonte de renda vinculada ao Cliente
+│   │   │   │   └── Usuario.java            # Usuário base com email, senha e role
+│   │   │   │
+│   │   │   ├── repository/                 # Interfaces DAO — Micronaut Data JPA
+│   │   │   │   ├── AgenteRepository.java
+│   │   │   │   ├── AutomovelRepository.java
+│   │   │   │   ├── ClienteRepository.java
+│   │   │   │   ├── ContratoRepository.java
+│   │   │   │   ├── PedidoRepository.java
+│   │   │   │   ├── RendimentoRepository.java
+│   │   │   │   └── UsuarioRepository.java
+│   │   │   │
+│   │   │   ├── service/                    # Lógica de Negócio e Regras de Validação
+│   │   │   │   ├── AutomovelService.java   # Regras de frota, validação de cadastro
+│   │   │   │   ├── ClienteService.java     # Atualização de perfil e rendimentos
+│   │   │   │   └── PedidoService.java      # Fluxo de aprovação, geração de contrato
+│   │   │   │
+│   │   │   └── Application.java            # Main — Ponto de entrada da JVM
+│   │   │
+│   │   └── resources/
+│   │       ├── application.properties      # Configurações: DB, porta, Hibernate DDL
+│   │       └── logback.xml                 # Configuração de logs do console
 │   │
-│   └── resources/
-│       ├── application.properties  # Credentials, Drivers, HikariCP Settings
-│       └── logback.xml             # Logs de console de aplicação
+│   └── test/java/br/gestao/
+│       └── GestaoAluguelVeiculosTest.java  # Testes de integração (JUnit 5)
 │
-└── test/java/br/gestao/            # Suíte de Testes (JUnit 5 + Micronaut Test)
+└── pom.xml                                 # Dependências e plugins Maven
 ```
 
-### 🎨 Frontend (React/Vite)
+### 🎨 Frontend — `codigo/frontend/`
+
 ```text
-Sistemas-de-aluguel-de-carros/codigo/frontend/src
-├── assets/                      # Imagens estáticas, SVGs, Logotipos
-├── components/                  # (Opcional - caso expandido) Inputs, Dialogs e Buttons base
-├── layouts/                     # Embrulhos Visuais Master (Ex: DashboardLayout.jsx contendo Menus)
-├── pages/                       # Telas baseadas em rotas
-│   ├── Admin/                   # Telas exclusivas p/ Agentes (Clients.jsx, Fleet.jsx, Requests.jsx)
-│   ├── Auth/                    # Telas de Entrada Livre (Login.jsx, Register.jsx)
-│   ├── Client/                  # Fluxo de quem tem intenção de Renda (Catalog.jsx, Orders.jsx, Profile.jsx)
-│   └── Home/                    # Gateways após autenticação (AgentDashboard, ClientDashboard)
-├── App.jsx                      # O Mapeador Oficial de Rotas (<Routes>)
-└── main.jsx                     # Injector React no `index.html` público
+frontend/
+├── src/
+│   ├── assets/                         # Recursos estáticos
+│   │   ├── bg-car.png                  # Imagem de fundo da tela de login
+│   │   ├── hero.png                    # Imagem principal da home
+│   │   ├── react.svg
+│   │   └── vite.svg
+│   │
+│   ├── layouts/                        # Estruturas visuais base (Master Pages)
+│   │   └── DashboardLayout.jsx         # Sidebar + Navbar global do painel logado
+│   │
+│   ├── pages/                          # Telas da aplicação por papel de usuário
+│   │   │
+│   │   ├── Admin/                      # Telas exclusivas de Agentes e Admins
+│   │   │   ├── Clients.jsx             # Tabela completa de clientes cadastrados
+│   │   │   ├── Fleet.jsx               # Cadastro e gestão de veículos da frota
+│   │   │   └── Requests.jsx            # Fila de pedidos para análise/aprovação
+│   │   │
+│   │   ├── Auth/                       # Telas públicas de autenticação
+│   │   │   ├── Login.jsx               # Formulário de acesso com animação 3D
+│   │   │   └── Register.jsx            # Cadastro de Conta (Cliente ou Agente)
+│   │   │
+│   │   ├── Client/                     # Telas exclusivas de Clientes
+│   │   │   ├── Catalog.jsx             # Vitrine de carros para iniciar pedido
+│   │   │   ├── Orders.jsx              # Acompanhamento dos pedidos realizados
+│   │   │   └── Profile.jsx             # Atualização de RG, Endereço e Rendimentos
+│   │   │
+│   │   └── Home/                       # Dashboards pós-login (por papel)
+│   │       ├── AgentDashboard.jsx      # Painel inicial do Agente com métricas
+│   │       ├── ClientDashboard.jsx     # Painel inicial do Cliente com atalhos
+│   │       └── Dashboard.jsx           # Router inteligente por Role do usuário
+│   │
+│   ├── App.css                         # Estilos escopados do componente App
+│   ├── App.jsx                         # Configuração de todas as rotas (<Routes>)
+│   ├── index.css                       # Estilos globais + imports Tailwind
+│   └── main.jsx                        # ReactDOM.render no #root do index.html
+│
+├── index.html                          # HTML raiz da SPA (ponto de entrada Vite)
+├── vite.config.js                      # Configuração de plugins e proxy do Vite
+└── package.json                        # Dependências e scripts do Node
 ```
 
 ---
 
-## 🏃 Passo a Passo para Execução e Build Local
+## 🏃 Passo a Passo para Execução Local
 
-### 1. Clonando e Configurando Variáveis (PostgreSQL)
-Tenha banco PostgreSQL ativo e responda localmente. Atualize seu repositório:
-```bash
-git clone <url-do-seu-repo>; cd Sistemas-de-aluguel-de-carros
-```
-Ajuste `codigo/GestaoAluguelVeiculos/src/main/resources/application.properties`:
-```properties
-datasources.default.url=jdbc:postgresql://localhost:5432/A_SUA_DATABASE
-datasources.default.username=SEU_USUARIO_POSTGRES
-datasources.default.password=SUA_SENHA_POSTGRES
-# Por padrão, o Hibernate tentará inicializar/atualizar o schema tabelar
-```
+### ✅ Pré-requisitos
 
-### 2. Rodando o Java + Micronaut Backend
-Utilizando as ferramentas integradas:
+Antes de começar, garanta que possui instalado:
+
+- **[Java JDK 21](https://adoptium.net/)** — necessário para compilar e rodar o backend
+- **[Apache Maven](https://maven.apache.org/)** — ou use o Maven Wrapper `./mvnw` embutido
+- **[Node.js 18+](https://nodejs.org/)** e **npm** — para rodar o frontend
+- **[PostgreSQL 14+](https://www.postgresql.org/)** — banco de dados rodando localmente
+
+---
+
+### 1️⃣ Configurando o Banco de Dados (PostgreSQL)
+
+1. Inicie o serviço PostgreSQL (porta padrão `5432`).
+2. Crie o banco de dados:
+   ```sql
+   CREATE DATABASE gestao_aluguel;
+   ```
+3. Edite o arquivo de configuração do backend:
+   ```
+   codigo/GestaoAluguelVeiculos/src/main/resources/application.properties
+   ```
+   ```properties
+   datasources.default.url=jdbc:postgresql://localhost:5432/gestao_aluguel
+   datasources.default.username=postgres
+   datasources.default.password=sua_senha_aqui
+   datasources.default.driver-class-name=org.postgresql.Driver
+   ```
+
+> 💡 O Hibernate criará/atualizará as tabelas automaticamente na primeira execução.
+
+---
+
+### 2️⃣ Rodando o Backend (API Micronaut)
+
+Abra um terminal na raiz do projeto:
+
 ```bash
+# Entre na pasta do backend
 cd codigo/GestaoAluguelVeiculos
-# Limpa sujeiras antigas e compila
+
+# Compile o projeto (baixa dependências na primeira vez)
 ./mvnw clean compile
-# Levanta o serviço na porta :8080 local
+
+# Inicie o servidor de desenvolvimento
 ./mvnw mn:run
 ```
-<<<<<<< HEAD
 
-#### Para Rodar Bateria de Testes (TDD/Automated):
+✅ Sucesso: o terminal exibirá `Server Running: http://localhost:8080`
+
+#### Rodar os Testes Automatizados:
 ```bash
 ./mvnw test
 ```
-=======
-### 2️⃣ Frontend
 
-Certifique-se de ter o **Node.js** instalado.
-
+#### Gerar o JAR para Produção:
 ```bash
-# Navegue até a pasta do frontend
-cd frontend-folder
-
-# Instale as dependências
-npm install
-
-# Inicie o servidor de desenvolvimento
-npm run dev
+./mvnw package
+# O arquivo executável estará em: target/GestaoAluguelVeiculos-0.1.jar
+java -jar target/GestaoAluguelVeiculos-0.1.jar
 ```
-# Histórias de Usuário - Sistema de Aluguel de Carros
->>>>>>> 46626b913f04eab47fce830bf8d982a94677ca8d
-
-### 3. Subindo o Frontend (Vite)
-Aproveite o terminal dinâmico do Node. Em outra aba:
-```bash
-cd codigo/frontend
-# Verifique integridades de bibliotecas
-npm install
-# Subida de Ambiente em modo HMR e DEV (Porta :5173 tipicamente)
-npm run dev
-```
-
-### 4. Construindo para Produção
-Caso deseje distribuir no ar (na Vercel, AWS, etc):
-- **Frontend**: Rode `npm run build` na pasta `frontend`. Os estáticos cairão na pasta `/dist`.
-- **Backend**: Rode `./mvnw package`. O `.jar` final unificado estará dentro do respectivo `target/`.
 
 ---
 
-## 📖 Fluxo de Histórias de Usuário Atendidas (Roadmap)
+### 3️⃣ Rodando o Frontend (React + Vite)
 
-✅ **US01:** Cadastro prévio unificado para triagem inicial.  
-✅ **US02 / US03 / US04 / US05:** Clientes introduzem desejos no "Catálogo", consultam aba "Orders/Pedidos" e realizam modificações ou cancelamentos antes que um avalista os olhe.  
-✅ **US06 / US07:** Agentes monitoram um grande Painel Financeiro para modificar dados burocráticos ou analisar viabilidade baseado em Score do cliente.  
-✅ **US08 / US09:** Ao deferir positivamente os aluguéis, geram-se links de Contrato firmados com bancos para dar lastro à frota.  
-✅ **US10 a US12:** Manutenção de bases de dados fortes de rendimentos do contratante e amarração absoluta entre a Placa/Modelo do carro e a agência ou dono verdadeiro.
+Abra **outro** terminal:
 
+```bash
+# Entre na pasta do frontend
+cd codigo/frontend
 
+# Instale as dependências (execute apenas na primeira vez ou após atualizar package.json)
+npm install
 
+# Inicie o servidor de desenvolvimento com hot-reload
+npm run dev
+```
+
+✅ Sucesso: acesse **[http://localhost:5173](http://localhost:5173)** no seu navegador.
+
+#### Build para Produção:
+```bash
+npm run build
+# Os arquivos estáticos estarão em: frontend/dist/
+```
+
+---
+
+## 📖 Histórias de Usuário
+
+| ID | Épico | Descrição | Status |
+|----|-------|-----------|--------|
+| US01 | Acesso e Cadastro | Cadastro prévio para acesso ao sistema com papel definido | ✅ |
+| US02 | Portal do Cliente | Introduzir pedido de aluguel via catálogo online | ✅ |
+| US03 | Portal do Cliente | Consultar os próprios pedidos e seus status | ✅ |
+| US04 | Portal do Cliente | Modificar pedido antes da aprovação do agente | ✅ |
+| US05 | Portal do Cliente | Cancelar pedido de aluguel em aberto | ✅ |
+| US06 | Portal do Agente | Análise financeira de pedidos na fila de aprovação | ✅ |
+| US07 | Portal do Agente | Modificar valores e termos do pedido durante avaliação | ✅ |
+| US08 | Portal do Agente | Aprovar pedido e encaminhar à geração de contrato | ✅ |
+| US09 | Portal do Agente | Associar contrato de crédito bancário ao aluguel | ✅ |
+| US10 | Dados Cadastrais | Armazenar dados do contratante (CPF, RG, endereço, rendimentos) | ✅ |
+| US11 | Dados Cadastrais | Registrar dados do automóvel (matrícula, marca, modelo, placa) | ✅ |
+| US12 | Dados Cadastrais | Registrar propriedade do veículo (agência, banco ou terceiro) | ✅ |
+
+---
+
+## 👥 Autores
+
+| 👤 Nome | 🖼️ Foto | :octocat: GitHub | 💼 LinkedIn | 📧 E-mail |
+|---------|----------|-----------------|-------------|-----------|
+| Davi Nunes Carvalho | <div align="center"><img src="https://github.com/Davii13.png" width="70px" height="70px" style="border-radius:50%;"></div> | <div align="center"><a href="https://github.com/Davii13"><img src="https://img.shields.io/badge/GitHub-Davii13-black?logo=github" /></a></div> | <div align="center"><a href="#"><img src="https://img.shields.io/badge/LinkedIn-blue?logo=linkedin" /></a></div> | <div align="center"><a href="mailto:seuemail@gmail.com">seuemail@gmail.com</a></div> |
+| João Victor Russo Marquito | <div align="center"><img src="https://github.com/joaovictorz10.png" width="70px" height="70px" style="border-radius:50%;"></div> | <div align="center"><a href="https://github.com/joaovictorz10"><img src="https://img.shields.io/badge/GitHub-joaovictorz10-black?logo=github" /></a></div> | <div align="center"><a href="#"><img src="https://img.shields.io/badge/LinkedIn-blue?logo=linkedin" /></a></div> | <div align="center"><a href="mailto:seuemail@gmail.com">seuemail@gmail.com</a></div> |
+
+---
+
+<p align="center">
+  Feito com ☕ Java e ⚛️ React
+</p>
