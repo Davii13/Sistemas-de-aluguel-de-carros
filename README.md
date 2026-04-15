@@ -20,7 +20,9 @@ Este projeto é um sistema web corporativo **Fullstack** desenhado para gerencia
 - **Contratos e Auditoria**: Geração automática de contratos associados legalmente ao requisitante e aprovação da entidade fiadora (banco ou seguradora).
 
 ---
+## 👥 Autores
 
+<<<<<<< HEAD
 ## 📐 Arquitetura do Sistema
 
 Abaixo, a representação da arquitetura distribuída entre o Frontend de componente único (React) e a API Monolítica Modular (Micronaut).
@@ -101,6 +103,17 @@ Aqui está o mapa geral dos recursos disponibilizados para que o React interaja 
 ---
 
 ## 📂 Arquitetura Completa de Pastas 
+=======
+Liste os principais contribuidores. Você pode usar links para seus perfis.
+
+| 👤 Nome | 🖼️ Foto | :octocat: GitHub | 💼 LinkedIn | 📤 Gmail |
+|---------|----------|-----------------|-------------|-----------|
+| Davi Nunes Carvalho | <div align="center"><img src="https://github.com/Davii13.png" width="70px" height="70px" style="border-radius:50%;"></div> | <div align="center"><a href="https://github.com/Davii13"><img src="https://joaopauloaramuni.github.io/image/github6.png" width="50px" height="50px"></a></div> | <div align="center"><a href="#"><img src="https://joaopauloaramuni.github.io/image/linkedin2.png" width="50px" height="50px"></a></div> | <div align="center"><a href="mailto:seuemail@gmail.com"><img src="https://joaopauloaramuni.github.io/image/gmail3.png" width="50px" height="50px"></a></div> |
+| João Victor Russo Marquito | <div align="center"><img src="https://github.com/joaovictorz10.png" width="70px" height="70px" style="border-radius:50%;"></div> | <div align="center"><a href="https://github.com/joaovictorz10"><img src="https://joaopauloaramuni.github.io/image/github6.png" width="50px" height="50px"></a></div> | <div align="center"><a href="#"><img src="https://joaopauloaramuni.github.io/image/linkedin2.png" width="50px" height="50px"></a></div> | <div align="center"><a href="mailto:seuemail@gmail.com"><img src="https://joaopauloaramuni.github.io/image/gmail3.png" width="50px" height="50px"></a></div> |
+
+---
+## 📂 Estrutura do Projeto
+>>>>>>> 46626b913f04eab47fce830bf8d982a94677ca8d
 
 ### 🔙 Backend (Micronaut)
 ```text
@@ -164,11 +177,29 @@ cd codigo/GestaoAluguelVeiculos
 # Levanta o serviço na porta :8080 local
 ./mvnw mn:run
 ```
+<<<<<<< HEAD
 
 #### Para Rodar Bateria de Testes (TDD/Automated):
 ```bash
 ./mvnw test
 ```
+=======
+### 2️⃣ Frontend
+
+Certifique-se de ter o **Node.js** instalado.
+
+```bash
+# Navegue até a pasta do frontend
+cd frontend-folder
+
+# Instale as dependências
+npm install
+
+# Inicie o servidor de desenvolvimento
+npm run dev
+```
+# Histórias de Usuário - Sistema de Aluguel de Carros
+>>>>>>> 46626b913f04eab47fce830bf8d982a94677ca8d
 
 ### 3. Subindo o Frontend (Vite)
 Aproveite o terminal dinâmico do Node. Em outra aba:
