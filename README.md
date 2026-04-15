@@ -1,4 +1,61 @@
-# Sistemas de aluguel de carros
+# 🚗 Sistema de Gestão de Aluguel de Veículos
+
+Este projeto é uma aplicação **Fullstack** composta por um backend robusto em Java e um frontend moderno em React, projetada para gerenciar processos de locação de automóveis.
+
+---
+
+## 🛠️ Tecnologias Principais
+
+### Backend
+- Java 21  
+- Micronaut Framework 4.10.11  
+- Hibernate / JPA para persistência de dados  
+- PostgreSQL como banco de dados relacional  
+
+### Frontend
+- React com Vite  
+- Tailwind CSS para estilização  
+- Axios para consumo da API REST  
+
+---
+
+## 📂 Estrutura do Projeto
+
+### 🔙 Backend (Micronaut)
+
+A organização do código segue o padrão de camadas para facilitar a escalabilidade:
+
+- `br.gestao.model`: Entidades JPA que representam as tabelas do banco de dados, como **Automovel**, **Cliente** e **Pedido**.  
+- `br.gestao.repository`: Interfaces que utilizam o Micronaut Data para operações CRUD.  
+- `br.gestao.service`: Camada de lógica de negócio e regras de validação.  
+- `br.gestao.controller`: Endpoints REST que gerenciam as requisições HTTP.  
+- `br.gestao.config`: Configurações globais, incluindo o filtro de CORS para integração com o frontend.  
+
+---
+
+### 🎨 Frontend (React)
+
+Organizado de forma modular para componentes reutilizáveis:
+
+- `src/components`: Elementos de UI (Botões, Inputs, Modais).  
+- `src/pages`: Páginas principais da aplicação (Dashboard, Cadastro de Veículos).  
+- `src/services`: Configurações do Axios e chamadas para os endpoints do backend.  
+- `src/context`: Gerenciamento de estado global (Autenticação).  
+
+---
+
+## 🏃 Como Rodar a Aplicação
+
+### 1️⃣ Backend
+
+Certifique-se de ter o **JDK 21** instalado.
+
+```bash
+# Navegue até a pasta do backend
+cd GestaoAluguelVeiculos
+
+# Execute a aplicação usando o Maven Wrapper
+./mvnw mn:run
 
 # Histórias de Usuário - Sistema de Aluguel de Carros
 
