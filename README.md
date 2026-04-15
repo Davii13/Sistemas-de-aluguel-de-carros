@@ -57,6 +57,20 @@ cd GestaoAluguelVeiculos
 # Execute a aplicação usando o Maven Wrapper
 ./mvnw mn:run
 ```
+### 2️⃣ Frontend
+
+Certifique-se de ter o **Node.js** instalado.
+
+```bash
+# Navegue até a pasta do frontend
+cd frontend-folder
+
+# Instale as dependências
+npm install
+
+# Inicie o servidor de desenvolvimento
+npm run dev
+```
 # Histórias de Usuário - Sistema de Aluguel de Carros
 
 ## Épico 1: Acesso e Cadastro
