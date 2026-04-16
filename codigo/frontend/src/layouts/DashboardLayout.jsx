@@ -20,19 +20,22 @@ export default function DashboardLayout() {
     navigate('/login');
   };
 
-  if (!user) return <div className="loader">Carregando...</div>;
+  if (!user) return <div className="loader">Classe A Drive</div>;
 
   const isAgent = user.tipoPerfil === 'AGENTE';
 
   return (
     <div className="dashboard-container">
       <aside className="sidebar">
-        <div className="sidebar-brand font-outfit">LOCALIZA <span className="text-gold">PREMIUM</span></div>
+        <div className="sidebar-brand font-brand">
+          Classe A Drive
+          <span className="brand-line">Aluguel de Luxo</span>
+        </div>
 
         <div className="sidebar-user-card">
           <div className="user-avatar">{user.nome.charAt(0)}</div>
           <div className="user-info">
-            <span className="user-role">{isAgent ? 'Agente Administrativo' : 'Cliente VIP'}</span>
+            <span className="user-role">{isAgent ? 'Agente Administrativo' : 'Cliente Premium'}</span>
             <strong className="user-name">{user.nome}</strong>
           </div>
         </div>

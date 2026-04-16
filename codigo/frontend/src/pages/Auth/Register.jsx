@@ -37,11 +37,11 @@ export default function Register() {
   return (
     <div className="auth-container fade-in">
       <div className="auth-box">
-        <div style={{display: 'flex', justifyContent: 'center', marginBottom: '1.5rem', filter: 'drop-shadow(0 0 15px rgba(212, 175, 55, 0.4))'}}>
-           <Car size={64} className="text-gold" />
+        <div style={{display: 'flex', justifyContent: 'center', marginBottom: '1.2rem', filter: 'drop-shadow(0 0 18px rgba(212, 175, 55, 0.5))'}}>
+           <Car size={60} className="text-gold" />
         </div>
-        <h1 className="auth-title font-outfit text-gold" style={{textAlign: 'center', fontSize: '2.2rem', marginBottom: '0.5rem', fontWeight: '800', letterSpacing: '1px', textShadow: '0 4px 15px rgba(0,0,0,0.5)'}}>NOVO ACESSO</h1>
-        <p className="auth-subtitle" style={{textAlign: 'center', color: 'var(--text-main)', marginBottom: '2.5rem', fontWeight: '500'}}>Crie sua conta no sistema premium</p>
+        <h1 className="auth-title text-gold" style={{textAlign: 'center', fontSize: '2.4rem', marginBottom: '0.3rem', letterSpacing: '1px', textShadow: '0 4px 20px rgba(212,175,55,0.25)'}}>Classe A Drive</h1>
+        <p className="auth-subtitle" style={{textAlign: 'center', fontFamily: 'var(--font-ui)', color: 'var(--text-muted)', marginBottom: '2.5rem', fontWeight: '500', letterSpacing: '2px', textTransform: 'uppercase', fontSize: '0.72rem'}}>Crie sua conta premium</p>
 
         {error && <div style={{color: 'var(--danger)', marginBottom: '1rem', textAlign: 'center'}}>{error}</div>}
 
@@ -94,8 +94,8 @@ export default function Register() {
             </div>
           </div>
 
-          <button type="submit" className="btn-primary" style={{width: '100%', marginTop: '1rem', fontSize: '1.1rem'}}>
-            Registrar e Entrar
+          <button type="submit" className="btn-primary" style={{width: '100%', marginTop: '1rem', fontSize: '1rem', letterSpacing: '2px'}}>
+            Criar Conta
           </button>
         </form>
 
