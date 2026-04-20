@@ -231,6 +231,9 @@ GestaoAluguelVeiculos/
 │   │   │   │   ├── TipoAgente.java         # EMPRESA | BANCO | SEGURADORA
 │   │   │   │   └── TipoProprietario.java   # AGENCIA | BANCO | CLIENTE
 │   │   │   │
+│   │   │   ├── exception/                  # Gerenciamento Global de Exceções
+│   │   │   │   └── GlobalExceptionHandler.java # Tratamento unificado de erros da API
+│   │   │   │
 │   │   │   ├── model/                      # Entidades JPA — Tabelas do PostgreSQL
 │   │   │   │   ├── Agente.java             # Entidade de Agente/Banco avaliador
 │   │   │   │   ├── Automovel.java          # Veículo da frota (marca, modelo, placa)
@@ -271,11 +274,17 @@ GestaoAluguelVeiculos/
 ```text
 frontend/
 ├── src/
-│   ├── assets/                         # Recursos estáticos
-│   │   ├── bg-car.png                  # Imagem de fundo da tela de login
-│   │   ├── hero.png                    # Imagem principal da home
+│   ├── assets/                         # Recursos estáticos (Imagens, SVG)
+│   │   ├── bg-car.png                  # Background premium do login
+│   │   ├── hero.png                    # Hero image da Landing Page
 │   │   ├── react.svg
 │   │   └── vite.svg
+│   │
+│   ├── components/                     # Componentes React Reutilizáveis
+│   │   └── NotificationModal.jsx       # Modal para alertas e notificações
+│   │
+│   ├── context/                        # Gerenciamento de Estado Global
+│   │   └── NotificationContext.jsx     # Contexto para notificações sistêmicas
 │   │
 │   ├── layouts/                        # Estruturas visuais base (Master Pages)
 │   │   └── DashboardLayout.jsx         # Sidebar + Navbar global do painel logado
@@ -288,7 +297,7 @@ frontend/
 │   │   │   └── Requests.jsx            # Fila de pedidos para análise/aprovação
 │   │   │
 │   │   ├── Auth/                       # Telas públicas de autenticação
-│   │   │   ├── Login.jsx               # Formulário de acesso com animação 3D
+│   │   │   ├── Login.jsx               # Formulário de acesso renovado
 │   │   │   └── Register.jsx            # Cadastro de Conta (Cliente ou Agente)
 │   │   │
 │   │   ├── Client/                     # Telas exclusivas de Clientes
@@ -296,19 +305,20 @@ frontend/
 │   │   │   ├── Orders.jsx              # Acompanhamento dos pedidos realizados
 │   │   │   └── Profile.jsx             # Atualização de RG, Endereço e Rendimentos
 │   │   │
-│   │   └── Home/                       # Dashboards pós-login (por papel)
+│   │   └── Home/                       # Dashboards e Landing Page
 │   │       ├── AgentDashboard.jsx      # Painel inicial do Agente com métricas
 │   │       ├── ClientDashboard.jsx     # Painel inicial do Cliente com atalhos
-│   │       └── Dashboard.jsx           # Router inteligente por Role do usuário
+│   │       ├── Dashboard.jsx           # Router inteligente por Role do usuário
+│   │       └── LandingPage.jsx         # Nova página inicial institucional (Premium)
 │   │
-│   ├── App.css                         # Estilos escopados do componente App
+│   ├── App.css                         # Estilos globais do App
 │   ├── App.jsx                         # Configuração de todas as rotas (<Routes>)
-│   ├── index.css                       # Estilos globais + imports Tailwind
-│   └── main.jsx                        # ReactDOM.render no #root do index.html
+│   ├── index.css                       # Design System, Cores e Tailwind Base
+│   └── main.jsx                        # Ponto de entrada React
 │
-├── index.html                          # HTML raiz da SPA (ponto de entrada Vite)
-├── vite.config.js                      # Configuração de plugins e proxy do Vite
-└── package.json                        # Dependências e scripts do Node
+├── index.html                          # HTML raiz da SPA
+├── vite.config.js                      # Configuração do Bundler Vite
+└── package.json                        # Versões de logs e scripts Node
 ```
 
 ---
