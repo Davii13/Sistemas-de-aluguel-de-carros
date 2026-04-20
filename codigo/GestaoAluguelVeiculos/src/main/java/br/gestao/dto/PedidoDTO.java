@@ -13,6 +13,8 @@ public class PedidoDTO {
     private LocalDate dataInicio;
     private LocalDate dataFim;
     private String status;
+    private Double valorTotal;
+    private Double valorDiaria;
 
     public PedidoDTO() {}
 
@@ -32,4 +34,8 @@ public class PedidoDTO {
     public void setDataFim(LocalDate dataFim) { this.dataFim = dataFim; }
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
+    public Double getValorTotal() { return valorTotal; }
+    public void setValorTotal(Double valorTotal) { this.valorTotal = valorTotal; }
+    public Double getValorDiaria() { return valorDiaria; }
+    public void setValorDiaria(Double valorDiaria) { this.valorDiaria = valorDiaria; }
 }

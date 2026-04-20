@@ -36,8 +36,8 @@ export default function Login() {
   return (
     <div className="auth-container fade-in">
       <div className="auth-box">
-        <div style={{display: 'flex', justifyContent: 'center', marginBottom: '1.2rem', filter: 'drop-shadow(0 0 18px rgba(212, 175, 55, 0.5))'}}>
-           <Car size={60} className="text-gold" />
+        <div style={{display: 'flex', justifyContent: 'center', marginBottom: '1.5rem'}}>
+           <img src="/logo-premium.png" alt="Classe A Drive" style={{width: '140px', mixBlendMode: 'screen', filter: 'drop-shadow(0 0 20px rgba(212, 175, 55, 0.3))'}} />
         </div>
         <h1 className="auth-title text-gold" style={{textAlign: 'center', fontSize: '2.4rem', marginBottom: '0.3rem', letterSpacing: '1px', textShadow: '0 4px 20px rgba(212,175,55,0.25)'}}>Classe A Drive</h1>
         <p className="auth-subtitle" style={{textAlign: 'center', fontFamily: 'var(--font-ui)', color: 'var(--text-muted)', marginBottom: '2.5rem', fontWeight: '500', letterSpacing: '2px', textTransform: 'uppercase', fontSize: '0.72rem'}}>Aluguel de Veículos de Luxo</p>

@@ -59,6 +59,10 @@ public class PedidoController {
         dto.setDataInicio(pedido.getDataInicio());
         dto.setDataFim(pedido.getDataFim());
         dto.setStatus(pedido.getStatus().name());
+        dto.setValorTotal(pedido.getValorTotal());
+        if (pedido.getAutomovel() != null) {
+            dto.setValorDiaria(pedido.getAutomovel().getValorDiaria());
+        }
         return dto;
     }
 }

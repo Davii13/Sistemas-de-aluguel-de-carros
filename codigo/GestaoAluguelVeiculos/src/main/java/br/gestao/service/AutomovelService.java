@@ -34,6 +34,7 @@ public class AutomovelService {
         return automovelRepository.save(automovel);
     }
 
+    @Transactional
     public Automovel atualizar(Long id, Automovel automovel) {
         if (!automovelRepository.existsById(id))
             return null;

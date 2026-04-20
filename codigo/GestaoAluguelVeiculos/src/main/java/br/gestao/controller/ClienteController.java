@@ -7,7 +7,7 @@ import br.gestao.model.Rendimento;
 import jakarta.inject.Inject;
 import java.util.List;
 
-@Controller("/clientes")
+@Controller("/api/clientes")
 public class ClienteController {
 
     @Inject

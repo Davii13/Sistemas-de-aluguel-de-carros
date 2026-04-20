@@ -7,6 +7,7 @@ import br.gestao.repository.*;
 import jakarta.inject.Singleton;
 import jakarta.transaction.Transactional;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Singleton
@@ -41,6 +42,11 @@ public class PedidoService {
         pedido.setDataFim(LocalDate.parse(request.getDataFim()));
         pedido.setStatus(StatusPedido.PENDENTE);
 
+        // Calculate valor total
+        long dias = ChronoUnit.DAYS.between(pedido.getDataInicio(), pedido.getDataFim());
+        if (dias <= 0) dias = 1; // Mínimo 1 diária
+        pedido.setValorTotal(dias * (automovel.getValorDiaria() != null ? automovel.getValorDiaria() : 0.0));
+
         return pedidoRepository.save(pedido);
     }
 
@@ -68,7 +74,7 @@ public class PedidoService {
             // Cria contrato
             Contrato contrato = new Contrato();
             contrato.setPedido(pedido);
-            contrato.setValorTotal(1500.0); // Mock value calculation based on premium car
+            contrato.setValorTotal(pedido.getValorTotal()); // Usar o valor calculado do pedido
             
             // Regra simples: Se o agente é banco, concede crédito.
             if (agente.getTipoAgente() == br.gestao.enums.TipoAgente.BANCO) {
@@ -95,6 +101,11 @@ public class PedidoService {
         pedido.setDataInicio(LocalDate.parse(request.getDataInicio()));
         pedido.setDataFim(LocalDate.parse(request.getDataFim()));
         
+        // Recalcular valor total
+        long dias = ChronoUnit.DAYS.between(pedido.getDataInicio(), pedido.getDataFim());
+        if (dias <= 0) dias = 1;
+        pedido.setValorTotal(dias * (automovel.getValorDiaria() != null ? automovel.getValorDiaria() : 0.0));
+
         return pedidoRepository.update(pedido);
     }
     

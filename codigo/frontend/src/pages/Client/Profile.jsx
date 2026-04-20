@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { Plus, Trash2, ShieldCheck } from 'lucide-react';
+import { useNotification } from '../../context/NotificationContext';
 
 export default function Profile() {
   const { user } = useOutletContext(); // This is the Usuario ID
+  const { showNotification } = useNotification();
   const [formData, setFormData] = useState({ id: '', nome: '', cpf: '', rg: '', endereco: '', profissao: '' });
   const [rendimentos, setRendimentos] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,7 +16,7 @@ export default function Profile() {
 
   const carregarPerfil = async () => {
     try {
-      const res = await fetch(`http://localhost:8081/clientes/usuario/${user.id}`);
+      const res = await fetch(`http://localhost:8081/api/clientes/usuario/${user.id}`);
       if (res.ok) {
         const cliente = await res.json();
         if (cliente) {
@@ -37,7 +39,7 @@ export default function Profile() {
   };
 
   const handleAdicionarRenda = () => {
-    if (rendimentos.length >= 3) return alert('Máximo de 3 fontes de renda permitidas.');
+    if (rendimentos.length >= 3) return showNotification('Limite Atingido', 'Máximo de 3 fontes de renda permitidas.', 'info');
     setRendimentos([...rendimentos, { fonte: '', valor: '' }]);
   };
 
@@ -57,8 +59,7 @@ export default function Profile() {
        rendimentos: rendimentos.map(r => ({ fonte: r.fonte, valor: parseFloat(r.valor) || 0 })) 
     };
     
-    // If we have an ID, we PUT, otherwise POST. Normally since they logged in they have at least a bare Cliente map.
-    const url = formData.id ? `http://localhost:8081/clientes/${formData.id}` : `http://localhost:8081/clientes`;
+    const url = formData.id ? `http://localhost:8081/api/clientes/${formData.id}` : `http://localhost:8081/api/clientes`;
     
     try {
       const res = await fetch(url, { 
@@ -67,9 +68,11 @@ export default function Profile() {
          body: JSON.stringify(payload) 
       });
       if (!res.ok) throw new Error('Falha ao atualizar dados. Verifique a central financeira.');
-      alert("Seu Perfil Premium e Score Financeiro foram atualizados.");
+      showNotification('Perfil Atualizado', "Seu Perfil Premium e Score Financeiro foram atualizados com sucesso.", 'success');
       carregarPerfil();
-    } catch (err) { alert(err.message); }
+    } catch (err) { 
+      showNotification('Erro no Cadastro', err.message, 'error'); 
+    }
   };
 
   if (loading) return <div className="p-8 text-muted">Carregando perfil digital...</div>;

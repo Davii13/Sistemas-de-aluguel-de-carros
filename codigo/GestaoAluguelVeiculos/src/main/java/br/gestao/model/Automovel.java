@@ -18,6 +18,7 @@ public class Automovel {
     private String marca;
     private String modelo;
     private String placa;
+    @Column(columnDefinition = "TEXT")
     private String imagemUrl;
 
     @Enumerated(EnumType.STRING)
@@ -25,6 +26,7 @@ public class Automovel {
     private TipoProprietario tipoProprietario;
 
     private Long proprietarioId; // ID of the Cliente, Agente (Banco/Empresa)
+    private Double valorDiaria;
 
     public Automovel() {}
 
@@ -54,4 +56,7 @@ public class Automovel {
     
     public Long getProprietarioId() { return proprietarioId; }
     public void setProprietarioId(Long proprietarioId) { this.proprietarioId = proprietarioId; }
+
+    public Double getValorDiaria() { return valorDiaria; }
+    public void setValorDiaria(Double valorDiaria) { this.valorDiaria = valorDiaria; }
 }

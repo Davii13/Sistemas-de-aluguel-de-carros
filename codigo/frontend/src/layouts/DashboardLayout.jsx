@@ -1,6 +1,7 @@
 import { LogOut, Car, ClipboardList, Users, Home } from 'lucide-react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import NotificationModal from '../components/NotificationModal';
 
 export default function DashboardLayout() {
   const navigate = useNavigate();
@@ -26,8 +27,10 @@ export default function DashboardLayout() {
 
   return (
     <div className="dashboard-container">
+      <NotificationModal />
       <aside className="sidebar">
         <div className="sidebar-brand font-brand">
+          <img src="/logo-premium.png" alt="Logo" style={{width: '120px', marginBottom: '0.8rem', display: 'block', mixBlendMode: 'screen'}} />
           Classe A Drive
           <span className="brand-line">Aluguel de Luxo</span>
         </div>

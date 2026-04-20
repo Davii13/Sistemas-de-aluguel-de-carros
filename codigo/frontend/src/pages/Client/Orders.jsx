@@ -1,15 +1,21 @@
 import { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { Edit2, Trash2, Calendar } from 'lucide-react';
+import { Edit2, Trash2, Calendar, AlertCircle } from 'lucide-react';
+import { useNotification } from '../../context/NotificationContext';
 
 export default function Orders() {
   const { user } = useOutletContext();
+  const { showNotification } = useNotification();
   const [pedidos, setPedidos] = useState([]);
   const [automoveis, setAutomoveis] = useState([]);
   
   // Modal states
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [editFormData, setEditFormData] = useState({ id: '', automovelId: '', dataInicio: '', dataFim: '' });
+
+  // Custom Cancel Confirmation Modal States
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+  const [pedidoToCancelId, setPedidoToCancelId] = useState(null);
 
   useEffect(() => {
     loadPedidos();
@@ -50,25 +56,45 @@ export default function Orders() {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-           clienteId: user.id, // required in CreatePedidoRequest
+           clienteId: user.id,
            automovelId: editFormData.automovelId,
            dataInicio: editFormData.dataInicio,
            dataFim: editFormData.dataFim
         })
       });
       if (res.ok) {
+        showNotification('Contrato Atualizado', 'Sua apólice foi modificada com sucesso.', 'success');
         setIsEditOpen(false);
         loadPedidos();
       } else {
-        alert("Erro ao modificar pedido.");
+        showNotification('Erro na Modificação', 'Não foi possível alterar seu contrato. Verifique os dados.', 'error');
       }
-    } catch (e) { console.error(e); }
+    } catch (e) { 
+      console.error(e);
+      showNotification('Erro de Sistema', 'Falha ao conectar com a central.', 'error');
+    }
   };
 
-  const cancelarPedido = async (id) => {
-    if (confirm("Deseja realmente cancelar esta locação VIP?")) {
-      await fetch(`http://localhost:8081/api/pedidos/${id}`, { method: 'DELETE' });
-      loadPedidos();
+  const solicitarCancelamento = (id) => {
+    setPedidoToCancelId(id);
+    setIsCancelModalOpen(true);
+  };
+
+  const handleConfirmCancel = async () => {
+    if (!pedidoToCancelId) return;
+    try {
+      const res = await fetch(`http://localhost:8081/api/pedidos/${pedidoToCancelId}`, { method: 'DELETE' });
+      if (res.ok) {
+        showNotification('Locação Cancelada', 'Sua reserva foi removida do sistema.', 'success');
+        setIsCancelModalOpen(false);
+        setPedidoToCancelId(null);
+        loadPedidos();
+      } else {
+        showNotification('Erro ao Cancelar', 'Não foi possível realizar o cancelamento agora.', 'error');
+      }
+    } catch (e) {
+      console.error(e);
+      showNotification('Erro de Sistema', "Erro ao conectar com o servidor.", 'error');
     }
   };
 
@@ -85,6 +111,7 @@ export default function Orders() {
                 <th>Contrato Oficial</th>
                 <th>Veículo Designado</th>
                 <th>Período Contratado</th>
+                <th>Valor Total</th>
                 <th>Status de Liberação</th>
                 <th style={{textAlign: 'right'}}>Ações</th>
               </tr>
@@ -95,28 +122,29 @@ export default function Orders() {
                   <td className="text-gold font-bold">CTX-{p.id.toString().padStart(4, '0')}</td>
                   <td className="font-medium text-lg">{p.automovelMarca} <span className="text-muted">{p.automovelModelo}</span></td>
                   <td>{p.dataInicio.split('-').reverse().join('/')} ➔ {p.dataFim.split('-').reverse().join('/')}</td>
+                  <td className="text-gold font-bold">R$ {p.valorTotal?.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</td>
                   <td>
                     <span className={`badge ${p.status === 'APROVADO' ? 'badge-success' : p.status === 'REJEITADO' ? 'badge-danger' : 'badge-pending'}`}>
                        {p.status}
                     </span>
                   </td>
                   <td style={{textAlign: 'right'}}>
-                    {/* Only allow modifying if pending, or you can allow anytime depending on logic */}
                     <div style={{display: 'flex', gap: '8px', justifyContent: 'flex-end'}}>
                       <button onClick={() => openEdit(p)} className="action-btn text-muted hover:text-white" title="Modificar Contrato"><Edit2 size={18}/></button>
-                      <button onClick={() => cancelarPedido(p.id)} className="action-btn text-danger hover:text-red-400" title="Cancelar Reserva"><Trash2 size={18}/></button>
+                      <button onClick={() => solicitarCancelamento(p.id)} className="action-btn text-danger hover:text-red-400" title="Cancelar Reserva"><Trash2 size={18}/></button>
                     </div>
                   </td>
                 </tr>
               ))}
-              {pedidos.length === 0 && <tr><td colSpan="5" className="text-center text-muted" style={{padding: '3rem'}}>Você ainda não experimentou nosso catálogo.</td></tr>}
+              {pedidos.length === 0 && <tr><td colSpan="6" className="text-center text-muted" style={{padding: '3rem'}}>Você ainda não experimentou nosso catálogo.</td></tr>}
             </tbody>
           </table>
         </div>
       </div>
 
+      {/* MODAL EDITAR LOCAÇÃO */}
       {isEditOpen && (
-        <div className="modal-overlay">
+        <div className="modal-overlay" style={{zIndex: 1000}}>
           <div className="modal-content glass-panel bounce-in">
              <div className="modal-header">
                 <h2 className="font-outfit text-gold">Modificar Locação</h2>
@@ -144,6 +172,38 @@ export default function Orders() {
                 <button type="button" onClick={() => setIsEditOpen(false)} className="btn-secondary">Cancelar</button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL DE CONFIRMAÇÃO DE CANCELAMENTO */}
+      {isCancelModalOpen && (
+        <div className="modal-overlay" style={{zIndex: 1100}}>
+          <div className="modal-content glass-panel bounce-in" style={{maxWidth: '450px', textAlign: 'center'}}>
+            <div style={{display: 'flex', justifyContent: 'center', marginBottom: '1.5rem'}}>
+              <div style={{background: 'rgba(201, 64, 64, 0.1)', padding: '1rem', borderRadius: '50%'}}>
+                <AlertCircle size={48} className="text-danger" />
+              </div>
+            </div>
+            <h2 className="font-outfit text-xl font-bold mb-2">Cancelar Locação?</h2>
+            <p className="text-muted mb-8">
+              Esta ação removerá permanentemente sua reserva VIP da nossa agenda. Deseja realmente prosseguir?
+            </p>
+            <div className="flex gap-3">
+              <button 
+                onClick={handleConfirmCancel} 
+                className="btn-primary flex-1" 
+                style={{background: 'linear-gradient(135deg, #c94040 0%, #8a2b2b 100%)', boxShadow: '0 4px 20px rgba(201, 64, 64, 0.25)'}}
+              >
+                Confirmar Cancelamento
+              </button>
+              <button 
+                onClick={() => { setIsCancelModalOpen(false); setPedidoToCancelId(null); }} 
+                className="btn-secondary flex-1"
+              >
+                Manter Reserva
+              </button>
+            </div>
           </div>
         </div>
       )}

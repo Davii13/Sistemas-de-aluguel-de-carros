@@ -33,6 +33,8 @@ public class Pedido {
     @Column(nullable = false)
     private StatusPedido status = StatusPedido.PENDENTE;
 
+    private Double valorTotal;
+
     public Pedido() {}
 
     public Long getId() { return id; }
@@ -55,4 +57,7 @@ public class Pedido {
     
     public StatusPedido getStatus() { return status; }
     public void setStatus(StatusPedido status) { this.status = status; }
+
+    public Double getValorTotal() { return valorTotal; }
+    public void setValorTotal(Double valorTotal) { this.valorTotal = valorTotal; }
 }

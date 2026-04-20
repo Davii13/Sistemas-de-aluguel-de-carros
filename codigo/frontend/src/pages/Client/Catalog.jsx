@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { ShieldCheck, KeyRound, Play, Calendar } from 'lucide-react';
 import { useOutletContext } from 'react-router-dom';
+import { useNotification } from '../../context/NotificationContext';
 
 export default function Catalog() {
   const { user } = useOutletContext();
+  const { showNotification } = useNotification();
   const [automoveis, setAutomoveis] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCarId, setSelectedCarId] = useState(null);
@@ -43,12 +45,12 @@ export default function Catalog() {
         setIsModalOpen(false);
         setDataInicio('');
         setDataFim('');
-        alert("Reserva efetuada. Aguarde avaliação.");
+        showNotification('Reserva Solicitada', "Sua intenção de reserva foi registrada. Aguarde a avaliação de crédito da nossa equipe.", 'success');
       } else {
         throw new Error("Erro");
       }
     } catch (e) {
-      alert("Houve um erro ao alugar! Desculpe.");
+      showNotification('Erro na Reserva', "Houve um erro ao processar seu pedido. Tente novamente mais tarde.", 'error');
     }
   };
 
@@ -82,7 +84,9 @@ export default function Catalog() {
                 <span>MAT: {car.matricula}</span> • <span>PLC: {car.placa}</span>
               </div>
               <div className="car-footer">
-                <div className="car-price">Diária <span>sob consulta</span></div>
+                <div className="car-price">
+                    Diária <span className="text-gold">R$ {car.valorDiaria?.toLocaleString('pt-BR', {minimumFractionDigits: 2}) || '---'}</span>
+                </div>
                 <button onClick={() => openForm(car.id)} className="btn-primary">
                   Alugar <Play size={16} fill="black" />
                 </button>
@@ -93,7 +97,7 @@ export default function Catalog() {
       </div>
 
       {isModalOpen && (
-        <div className="modal-overlay">
+        <div className="modal-overlay" style={{zIndex: 1000}}>
           <div className="modal-content glass-panel bounce-in">
              <div className="modal-header">
                 <h2 className="font-outfit text-gold">Solicitação de Reserva</h2>
@@ -111,6 +115,20 @@ export default function Catalog() {
                 <label className="input-label"><Calendar size={16}/> Data de Devolução</label>
                 <input required type="date" className="input-field" value={dataFim} onChange={e=>setDataFim(e.target.value)} />
               </div>
+
+              {dataInicio && dataFim && selectedCarId && (
+                <div className="glass-panel" style={{padding: '1rem', marginTop: '1rem', border: '1px solid var(--primary)', background: 'rgba(212,175,55,0.05)'}}>
+                   <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                      <span style={{fontSize: '0.9rem', color: 'var(--text-muted)'}}>Total Estimado:</span>
+                      <span style={{fontSize: '1.3rem', fontWeight: 'bold', color: 'var(--primary)'}}>
+                        R$ {(Math.max(1, Math.ceil((new Date(dataFim) - new Date(dataInicio)) / (1000 * 60 * 60 * 24))) * 
+                          (automoveis.find(c => c.id === selectedCarId)?.valorDiaria || 0))
+                        .toLocaleString('pt-BR', {minimumFractionDigits: 2})}
+                      </span>
+                   </div>
+                </div>
+              )}
+
               <div style={{marginTop: '2rem', display: 'flex', flexDirection: 'column', gap: '0.8rem'}}>
                 <button type="submit" className="btn-primary">Confirmar Intenção de Aluguel</button>
                 <button type="button" onClick={() => setIsModalOpen(false)} className="btn-secondary">Cancelar</button>

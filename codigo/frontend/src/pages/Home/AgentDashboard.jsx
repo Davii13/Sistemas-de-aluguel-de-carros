@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Check, X, Edit, Trash2, Plus, Car, Users, ClipboardList } from 'lucide-react';
+import { useNotification } from '../../context/NotificationContext';
 
 export default function AgentDashboard({ user }) {
+  const { showNotification, showConfirmation } = useNotification();
   const [activeTab, setActiveTab] = useState('pedidos'); // pedidos, clientes, veiculos
   
   const [pedidos, setPedidos] = useState([]);
@@ -30,24 +32,34 @@ export default function AgentDashboard({ user }) {
     } catch (e) { console.error(e); }
   };
 
-  const avaliar = async (pedidoId, aprovar) => {
+  const executarAvaliacao = async (pedidoId, aprovar) => {
     try {
-      if (!confirm(`Deseja ${aprovar ? 'APROVAR' : 'REJEITAR'} este contrato?`)) return;
       const res = await fetch(`http://localhost:8081/api/pedidos/${pedidoId}/avaliar?agenteId=${user.id}&aprovar=${aprovar}`, { method: 'POST' });
-      if (res.ok) loadPedidos();
-    } catch(e) { alert('Erro na avaliação'); }
+      if (res.ok) {
+        showNotification('Decisão Registrada', `Contrato ${aprovar ? 'APROVADO' : 'REJEITADO'} com sucesso.`, 'success');
+        loadPedidos();
+      }
+    } catch(e) { showNotification('Erro', 'Erro na avaliação', 'error'); }
+  }
+
+  const avaliar = async (pedidoId, aprovar) => {
+    showConfirmation(
+      'Avaliar Risco',
+      `Deseja ${aprovar ? 'APROVAR' : 'REJEITAR'} este contrato?`,
+      () => executarAvaliacao(pedidoId, aprovar)
+    );
   };
 
   // --- CLIENTES ---
   const carregarClientes = async () => {
     try {
-      const res = await fetch('http://localhost:8081/clientes');
+      const res = await fetch('http://localhost:8081/api/clientes');
       if (res.ok) setClientes(await res.json());
     } catch (e) { console.error(e); }
   };
 
   const handleAdicionarRenda = () => {
-    if (rendimentos.length >= 3) return alert('Máximo de 3 fontes.');
+    if (rendimentos.length >= 3) return showNotification('Aviso', 'Máximo de 3 fontes de renda.', 'info');
     setRendimentos([...rendimentos, { fonte: '', valor: '' }]);
   };
 
@@ -63,7 +75,7 @@ export default function AgentDashboard({ user }) {
     e.preventDefault();
     const { id, ...restData } = formData;
     const payload = { ...restData, rendimentos: rendimentos.map(r => ({ fonte: r.fonte, valor: parseFloat(r.valor) || 0 })) };
-    const url = formData.id ? `http://localhost:8081/clientes/${formData.id}` : 'http://localhost:8081/clientes';
+    const url = formData.id ? `http://localhost:8081/api/clientes/${formData.id}` : 'http://localhost:8081/api/clientes';
     
     try {
       const res = await fetch(url, { method: formData.id ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
@@ -71,12 +83,12 @@ export default function AgentDashboard({ user }) {
       setFormData({ id: '', nome: '', cpf: '', rg: '', endereco: '', profissao: '' });
       setRendimentos([]);
       carregarClientes();
-      alert("Cadastro de cliente atualizado na Central.");
-    } catch (err) { alert(err.message); }
+      showNotification('Sucesso', "Cadastro de cliente atualizado na Central.", 'success');
+    } catch (err) { showNotification('Erro', err.message, 'error'); }
   };
 
   const editarCliente = async (id) => {
-    const res = await fetch(`http://localhost:8081/clientes/${id}`);
+    const res = await fetch(`http://localhost:8081/api/clientes/${id}`);
     if (res.ok) {
       const cliente = await res.json();
       setFormData({ id: cliente.id, nome: cliente.nome, cpf: cliente.cpf, rg: cliente.rg, endereco: cliente.endereco, profissao: cliente.profissao });
@@ -84,11 +96,18 @@ export default function AgentDashboard({ user }) {
     }
   };
 
+  const executarExclusaoCliente = async (id) => {
+    await fetch(`http://localhost:8081/api/clientes/${id}`, { method: 'DELETE' });
+    showNotification('Removido', 'Cliente excluído do sistema.', 'success');
+    carregarClientes();
+  }
+
   const excluirCliente = async (id) => {
-    if (confirm('Deseja excluir as credenciais deste cliente?')) {
-      await fetch(`http://localhost:8081/clientes/${id}`, { method: 'DELETE' });
-      carregarClientes();
-    }
+    showConfirmation(
+      'Remover Cliente?',
+      'Deseja excluir as credenciais e o histórico deste cliente?',
+      () => executarExclusaoCliente(id)
+    );
   };
 
   // --- AUTOMÓVEIS ---
@@ -116,15 +135,23 @@ export default function AgentDashboard({ user }) {
       if (res.ok) {
         setIsCarModalOpen(false);
         loadAutomoveis();
+        showNotification('Sucesso', 'Veículo salvo com sucesso.', 'success');
       }
-    } catch(e) { alert("Erro ao salvar veículo"); }
+    } catch(e) { showNotification('Erro', "Erro ao salvar veículo", 'error'); }
   };
 
+  const executarExclusaoCarro = async (id) => {
+    await fetch(`http://localhost:8081/api/automoveis/${id}`, { method: 'DELETE' });
+    showNotification('Sucesso', 'Veículo removido da frota.', 'success');
+    loadAutomoveis();
+  }
+
   const excluirCarro = async (id) => {
-    if (confirm('Deseja aposentar este veículo da frota?')) {
-      await fetch(`http://localhost:8081/api/automoveis/${id}`, { method: 'DELETE' });
-      loadAutomoveis();
-    }
+    showConfirmation(
+      'Aposentar Veículo?',
+      'Deseja realmente remover este veículo da frota ativa?',
+      () => executarExclusaoCarro(id)
+    );
   };
 
   return (
@@ -311,8 +338,8 @@ export default function AgentDashboard({ user }) {
 
       {/* MODAL VEÍCULOS */}
       {isCarModalOpen && (
-        <div className="modal-overlay">
-           <div className="modal-content" style={{maxWidth: '600px'}}>
+        <div className="modal-overlay" style={{zIndex: 1000}}>
+           <div className="modal-content glass-panel bounce-in" style={{maxWidth: '600px'}}>
              <div className="modal-header">
                 <h2 className="modal-title font-racing">{carFormData.id ? 'Manutenção do Veículo' : 'Incorporação de Veículo'}</h2>
                 <button className="modal-close" onClick={() => setIsCarModalOpen(false)}>✕</button>

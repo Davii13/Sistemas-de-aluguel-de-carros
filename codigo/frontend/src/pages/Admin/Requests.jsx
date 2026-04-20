@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { Check, X, ShieldAlert } from 'lucide-react';
+import { useNotification } from '../../context/NotificationContext';
 
 export default function Requests() {
   const { user } = useOutletContext();
+  const { showNotification, showConfirmation } = useNotification();
   const [pedidos, setPedidos] = useState([]);
   const [loadingAction, setLoadingAction] = useState(null);
 
@@ -18,21 +20,29 @@ export default function Requests() {
     } catch (e) { console.error(e); }
   };
 
-  const avaliar = async (pedidoId, aprovar) => {
+  const executarAvaliacao = async (pedidoId, aprovar) => {
     try {
-      if (!confirm(`Deseja ${aprovar ? 'APROVAR' : 'REJEITAR'} este contrato?`)) return;
       setLoadingAction(pedidoId);
       const res = await fetch(`http://localhost:8081/api/pedidos/${pedidoId}/avaliar?agenteId=${user.id}&aprovar=${aprovar}`, { method: 'POST' });
       if (res.ok) {
+         showNotification('Avaliação Concluída', `O contrato foi ${aprovar ? 'APROVADO' : 'REJEITADO'} com sucesso.`, 'success');
          await loadPedidos();
       } else {
-         alert('Conflito no servidor. Atualize a página.');
+         showNotification('Conflito', 'Conflito no servidor. Atualize a página.', 'error');
       }
     } catch(e) { 
-      alert('Erro de conexão na avaliação'); 
+      showNotification('Erro de Sistema', 'Erro de conexão na avaliação', 'error'); 
     } finally {
       setLoadingAction(null);
     }
+  };
+
+  const avaliar = (pedidoId, aprovar) => {
+    showConfirmation(
+      aprovar ? 'Aprovar Locação?' : 'Rejeitar Locação?',
+      `Deseja realmente ${aprovar ? 'APROVAR' : 'REJEITAR'} este contrato e emitir a apólice?`,
+      () => executarAvaliacao(pedidoId, aprovar)
+    );
   };
 
   return (

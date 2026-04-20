@@ -9,7 +9,7 @@ export default function Clients() {
 
   const carregarClientes = async () => {
     try {
-      const res = await fetch('http://localhost:8081/clientes');
+      const res = await fetch('http://localhost:8081/api/clientes');
       if (res.ok) setClientes(await res.json());
     } catch (e) { console.error(e); }
   };

@@ -11,6 +11,7 @@ public class AutomovelDTO {
     private String modelo;
     private String placa;
     private String imagemUrl;
+    private Double valorDiaria;
 
     public AutomovelDTO() {}
 
@@ -28,4 +29,6 @@ public class AutomovelDTO {
     public void setPlaca(String placa) { this.placa = placa; }
     public String getImagemUrl() { return imagemUrl; }
     public void setImagemUrl(String imagemUrl) { this.imagemUrl = imagemUrl; }
+    public Double getValorDiaria() { return valorDiaria; }
+    public void setValorDiaria(Double valorDiaria) { this.valorDiaria = valorDiaria; }
 }
