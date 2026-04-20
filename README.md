@@ -82,7 +82,8 @@ Para melhor visualização, as telas principais estão organizadas lado a lado.
 | Tela | Captura de Tela |
 | :---: | :---: |
 | **Tela Inicial (Home)** | **Tela de Perfil / Settings** |
-| <img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" alt="Tela 1 do Mobile" width="120px" height="120px"> | <img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" alt="Tela 2 do Mobile" width="120px" height="120px"> |
+| <img src="<img width="1882" height="865" alt="screenshot-1776720495953" src="https://github.com/user-attachments/assets/e6827180-91db-4895-9676-6c881c237630" />
+" height="120px"> | <img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" alt="Tela 2 do Mobile" width="120px" height="120px"> |
 | **Tela de Cadastro** | **Tela de Lista / Detalhes** |
 | <img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" alt="Tela 3 do Mobile" width="120px" height="120px"> | <img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" alt="Tela 4 do Mobile" width="120px" height="120px"> |
 
