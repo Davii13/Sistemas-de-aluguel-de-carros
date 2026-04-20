@@ -14,7 +14,14 @@
 </p>
 
 ---
+## 👥 Autores
 
+| 👤 Nome | 🖼️ Foto | :octocat: GitHub | 💼 LinkedIn | 📧 E-mail |
+|---------|----------|-----------------|-------------|-----------|
+| Davi Nunes Carvalho | <div align="center"><img src="https://github.com/Davii13.png" width="70px" height="70px" style="border-radius:50%;"></div> | <div align="center"><a href="https://github.com/Davii13"><img src="https://img.shields.io/badge/GitHub-Davii13-black?logo=github" /></a></div> | <div align="center"><a href="#"><img src="https://img.shields.io/badge/LinkedIn-blue?logo=linkedin" /></a></div> | <div align="center"><a href="mailto:seuemail@gmail.com">davinunescarvalho35@gmail.com</a></div> |
+| João Victor Russo Marquito | <div align="center"><img src="https://github.com/joaovictorz10.png" width="70px" height="70px" style="border-radius:50%;"></div> | <div align="center"><a href="https://github.com/joaovictorz10"><img src="https://img.shields.io/badge/GitHub-joaovictorz10-black?logo=github" /></a></div> | <div align="center"><a href="#"><img src="https://img.shields.io/badge/LinkedIn-blue?logo=linkedin" /></a></div> | <div align="center"><a href="mailto:seuemail@gmail.com">seuemail@gmail.com</a></div> |
+
+---
 ## 📋 Índice
 
 - [Sobre o Projeto](#-sobre-o-projeto)
@@ -54,6 +61,43 @@ O backend expõe uma **API REST** construída com Micronaut, consumida pelo fron
 | 🏛️ **Gestão de Frota** | Cadastro, edição e remoção de veículos da frota com proprietário associado |
 
 ---
+## 🎥 Demonstração
+
+Use GIFs e prints para mostrar o projeto em ação.  
+
+> [!WARNING]
+> Dê preferência a hospedar suas imagens em um **CDN** (Content Delivery Network) ou no **GitHub Pages** para garantir que elas carreguem rapidamente e não quebrem. Saiba mais sobre o GitHub Pages clicando [aqui](https://github.com/joaopauloaramuni/joaopauloaramuni.github.io).
+
+### 📱 Aplicativo Mobile
+
+- GIF de demonstração (exemplo de fluxo de usuário):  
+
+| Demonstração 1 | Demonstração 2 | Demonstração 3 | Demonstração 4 |
+|----------------|----------------|----------------|----------------|
+| <img src="https://joaopauloaramuni.github.io/image/fundo_mobile_engsoft.jpeg" alt="Demonstração 1" height="400"> | <img src="https://joaopauloaramuni.github.io/image/fundo_mobile_engsoft.jpeg" alt="Demonstração 2" height="400"> | <img src="https://joaopauloaramuni.github.io/image/fundo_mobile_engsoft.jpeg" alt="Demonstração 3" height="400"> | <img src="https://joaopauloaramuni.github.io/image/fundo_mobile_engsoft.jpeg" alt="Demonstração 4" height="400"> |
+| _Sua gif aqui_ | _Sua gif aqui_ | _Sua gif aqui_ | _Sua gif aqui_ |
+
+Para melhor visualização, as telas principais estão organizadas lado a lado.
+
+| Tela | Captura de Tela |
+| :---: | :---: |
+| **Tela Inicial (Home)** | **Tela de Perfil / Settings** |
+| <img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" alt="Tela 1 do Mobile" width="120px" height="120px"> | <img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" alt="Tela 2 do Mobile" width="120px" height="120px"> |
+| **Tela de Cadastro** | **Tela de Lista / Detalhes** |
+| <img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" alt="Tela 3 do Mobile" width="120px" height="120px"> | <img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" alt="Tela 4 do Mobile" width="120px" height="120px"> |
+
+### 🌐 Aplicação Web
+
+Para melhor visualização, as telas principais estão organizadas lado a lado.
+
+| Tela | Captura de Tela |
+| :---: | :---: |
+| **Página Inicial (Home)** | **Página de Login** |
+| <img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" alt="Tela Inicial da Aplicação Web" width="120px" height="120px"> | <img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" alt="Tela de Login" width="120px" height="120px"> |
+| **Cadastro de Clientes** | **Cadastro de Produtos** |
+| <img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" alt="Tela de Cadastro de Clientes" width="120px" height="120px"> | <img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" alt="Tela de Cadastro de Produtos" width="120px" height="120px"> |
+| **Dashboard (Visão Geral)** | **Página Admin / Configurações** |
+| <img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" alt="Tela de Dashboard" width="120px" height="120px"> | <img src="https://joaopauloaramuni.github.io/image/aramunilogo.png" alt="Tela Administrativa" width="120px" height="120px"> |
 
 ## 📐 Arquitetura do Sistema
 
@@ -433,14 +477,7 @@ npm run build
 
 ---
 
-## 👥 Autores
 
-| 👤 Nome | 🖼️ Foto | :octocat: GitHub | 💼 LinkedIn | 📧 E-mail |
-|---------|----------|-----------------|-------------|-----------|
-| Davi Nunes Carvalho | <div align="center"><img src="https://github.com/Davii13.png" width="70px" height="70px" style="border-radius:50%;"></div> | <div align="center"><a href="https://github.com/Davii13"><img src="https://img.shields.io/badge/GitHub-Davii13-black?logo=github" /></a></div> | <div align="center"><a href="#"><img src="https://img.shields.io/badge/LinkedIn-blue?logo=linkedin" /></a></div> | <div align="center"><a href="mailto:seuemail@gmail.com">seuemail@gmail.com</a></div> |
-| João Victor Russo Marquito | <div align="center"><img src="https://github.com/joaovictorz10.png" width="70px" height="70px" style="border-radius:50%;"></div> | <div align="center"><a href="https://github.com/joaovictorz10"><img src="https://img.shields.io/badge/GitHub-joaovictorz10-black?logo=github" /></a></div> | <div align="center"><a href="#"><img src="https://img.shields.io/badge/LinkedIn-blue?logo=linkedin" /></a></div> | <div align="center"><a href="mailto:seuemail@gmail.com">seuemail@gmail.com</a></div> |
-
----
 
 <p align="center">
   Feito com ☕ Java e ⚛️ React
